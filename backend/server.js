@@ -12,6 +12,7 @@ import notificationRoutes from "./routes/notifications.js";
 import cors from 'cors';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
+import MongoStore from 'connect-mongo';
 
 import authRoutes from './routes/auth.js';
 import './auth/passport.js';
@@ -39,6 +40,7 @@ app.use(
     secret: process.env.SESSION_SECRET || "supersecurekey123",
     resave: false,
     saveUninitialized: false,
+    store: MongoStore.create({ mongoUrl: process.env.MONGO_URI }),
     cookie: {
       secure: process.env.NODE_ENV === 'production',
       sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
