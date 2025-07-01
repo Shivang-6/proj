@@ -75,8 +75,8 @@ const RelistProductModal = ({ product, isOpen, onClose, onSuccess }) => {
           description: formData.description,
           price: formData.price,
           category: product.category,
-          condition: formData.condition,
-          existingImages: JSON.stringify(product.imageUrls || [product.imageUrl])
+          quantity: parseInt(formData.quantity),
+          images: product.images,
         },
         { withCredentials: true }
       );

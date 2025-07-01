@@ -16,9 +16,7 @@ const NotificationDropdown = ({ user }) => {
 
   const fetchNotifications = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/notifications`, {
-        withCredentials: true
-      });
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/notifications`, { withCredentials: true });
       if (response.data.success) {
         setNotifications(response.data.notifications);
       }
@@ -29,9 +27,7 @@ const NotificationDropdown = ({ user }) => {
 
   const fetchUnreadCount = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/notifications/unread`, {
-        withCredentials: true
-      });
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/notifications/unread`, { withCredentials: true });
       if (response.data.success) {
         setUnreadCount(response.data.count);
       }
@@ -42,9 +38,7 @@ const NotificationDropdown = ({ user }) => {
 
   const markAsRead = async (notificationId) => {
     try {
-      await axios.put(`${import.meta.env.VITE_API_URL}/notifications/${notificationId}/read`, {}, {
-        withCredentials: true
-      });
+      await axios.put(`${import.meta.env.VITE_API_URL}/notifications/${notificationId}/read`, {}, { withCredentials: true });
       fetchNotifications();
       fetchUnreadCount();
     } catch (error) {
@@ -55,9 +49,7 @@ const NotificationDropdown = ({ user }) => {
   const markAllAsRead = async () => {
     try {
       setLoading(true);
-      await axios.put(`${import.meta.env.VITE_API_URL}/notifications/read-all`, {}, {
-        withCredentials: true
-      });
+      await axios.put(`${import.meta.env.VITE_API_URL}/notifications/read-all`, {}, { withCredentials: true });
       fetchNotifications();
       fetchUnreadCount();
     } catch (error) {
@@ -69,9 +61,7 @@ const NotificationDropdown = ({ user }) => {
 
   const deleteNotification = async (notificationId) => {
     try {
-      await axios.delete(`${import.meta.env.VITE_API_URL}/notifications/${notificationId}`, {
-        withCredentials: true
-      });
+      await axios.delete(`${import.meta.env.VITE_API_URL}/notifications/${notificationId}`, { withCredentials: true });
       fetchNotifications();
       fetchUnreadCount();
     } catch (error) {

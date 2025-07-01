@@ -13,9 +13,7 @@ const WishlistButton = ({ product, user, onWishlistChange }) => {
 
   const checkWishlistStatus = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/wishlist/check/${product._id}`, {
-        withCredentials: true
-      });
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/wishlist/check/${product._id}`, { withCredentials: true });
       setIsInWishlist(response.data.isInWishlist);
     } catch (error) {
       console.error('Error checking wishlist status:', error);
@@ -31,14 +29,10 @@ const WishlistButton = ({ product, user, onWishlistChange }) => {
     setLoading(true);
     try {
       if (isInWishlist) {
-        await axios.delete(`${import.meta.env.VITE_API_URL}/wishlist/${product._id}`, {
-          withCredentials: true
-        });
+        await axios.delete(`${import.meta.env.VITE_API_URL}/wishlist/${product._id}`, { withCredentials: true });
         setIsInWishlist(false);
       } else {
-        await axios.post(`${import.meta.env.VITE_API_URL}/wishlist/${product._id}`, {}, {
-          withCredentials: true
-        });
+        await axios.post(`${import.meta.env.VITE_API_URL}/wishlist/${product._id}`, {}, { withCredentials: true });
         setIsInWishlist(true);
       }
       

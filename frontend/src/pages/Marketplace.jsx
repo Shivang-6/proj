@@ -43,7 +43,7 @@ const Marketplace = () => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/products`);
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/products`, { withCredentials: true });
         if (res.data.success) {
           setProducts(res.data.products);
         } else {

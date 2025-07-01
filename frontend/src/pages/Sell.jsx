@@ -159,12 +159,7 @@ const Sell = () => {
     });
 
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/products/add`, data, {
-        withCredentials: true,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/products/add`, data, { withCredentials: true });
       
       if (response.data.success) {
         setSuccess("Product added successfully! Redirecting to marketplace...");

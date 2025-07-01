@@ -118,12 +118,7 @@ const EditProductModal = ({ isOpen, onClose, product, onProductUpdated }) => {
       const response = await axios.put(
         `${import.meta.env.VITE_API_URL}/products/${product._id}`,
         formDataToSend,
-        {
-          withCredentials: true,
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        }
+        { withCredentials: true }
       );
 
       if (response.data.success) {
