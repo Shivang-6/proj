@@ -29,7 +29,7 @@ const PaymentModal = ({ isOpen, onClose, product, user, onPaymentSuccess }) => {
       setLoading(true);
       setError('');
 
-      const response = await axios.post('http://localhost:5000/payment/create-order', {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/payment/create-order`, {
         productId: product._id,
         sellerId: product.seller._id,
         price: product.price
@@ -70,7 +70,7 @@ const PaymentModal = ({ isOpen, onClose, product, user, onPaymentSuccess }) => {
             console.log('Payment response from Razorpay:', response);
             
             // Verify payment on backend
-            const verifyResponse = await axios.post('http://localhost:5000/payment/verify-payment', {
+            const verifyResponse = await axios.post(`${import.meta.env.VITE_API_URL}/payment/verify-payment`, {
               razorpayOrderId: response.razorpay_order_id,
               razorpayPaymentId: response.razorpay_payment_id,
               razorpaySignature: response.razorpay_signature,

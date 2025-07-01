@@ -4,7 +4,7 @@ import { FcGoogle } from "react-icons/fc";
 
 const Login = () => {
   const handleGoogleLogin = () => {
-    window.open("http://localhost:5000/auth/google", "_self");
+    window.open(`${import.meta.env.VITE_API_URL}/auth/google`, "_self");
   };
 
   return (

@@ -28,7 +28,7 @@ const Profile = () => {
   // Fetch current user
   useEffect(() => {
     axios
-      .get("http://localhost:5000/auth/login/success", { withCredentials: true })
+      .get(`${import.meta.env.VITE_API_URL}/auth/login/success`, { withCredentials: true })
       .then((res) => setCurrentUser(res.data.user))
       .catch((err) => console.log("Not logged in", err));
   }, []);
@@ -39,8 +39,8 @@ const Profile = () => {
       try {
         setLoading(true);
         const endpoint = userId 
-          ? `http://localhost:5000/profile/${userId}`
-          : "http://localhost:5000/profile/me";
+          ? `${import.meta.env.VITE_API_URL}/profile/${userId}`
+          : `${import.meta.env.VITE_API_URL}/profile/me`;
         
         const response = await axios.get(endpoint, { withCredentials: true });
         
@@ -71,8 +71,8 @@ const Profile = () => {
     const fetchProducts = async () => {
       try {
         const endpoint = userId 
-          ? `http://localhost:5000/profile/${userId}/products`
-          : "http://localhost:5000/profile/me/products";
+          ? `${import.meta.env.VITE_API_URL}/profile/${userId}/products`
+          : `${import.meta.env.VITE_API_URL}/profile/me/products`;
         
         const response = await axios.get(endpoint, { withCredentials: true });
         
@@ -94,8 +94,8 @@ const Profile = () => {
     const fetchProducts = async () => {
       try {
         const endpoint = userId 
-          ? `http://localhost:5000/profile/${userId}/products`
-          : "http://localhost:5000/profile/me/products";
+          ? `${import.meta.env.VITE_API_URL}/profile/${userId}/products`
+          : `${import.meta.env.VITE_API_URL}/profile/me/products`;
         
         const response = await axios.get(endpoint, { withCredentials: true });
         
@@ -119,7 +119,7 @@ const Profile = () => {
     e.preventDefault();
     try {
       const response = await axios.put(
-        "http://localhost:5000/profile/me",
+        `${import.meta.env.VITE_API_URL}/profile/me`,
         editForm,
         { withCredentials: true }
       );
@@ -370,7 +370,7 @@ const Profile = () => {
                         try {
                           // Manually set it as sold out for testing
                           await axios.put(
-                            `http://localhost:5000/products/${availableProduct._id}/test-sold-out`,
+                            `${import.meta.env.VITE_API_URL}/products/${availableProduct._id}/test-sold-out`,
                             {},
                             { withCredentials: true }
                           );

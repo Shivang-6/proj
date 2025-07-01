@@ -15,7 +15,7 @@ const ChatModal = ({ isOpen, onClose, product, currentUser, otherUser, onMessage
   // Initialize socket connection
   useEffect(() => {
     if (isOpen && currentUser && otherUser && product) {
-      const newSocket = io('http://localhost:5000', {
+      const newSocket = io(import.meta.env.VITE_API_URL, {
         withCredentials: true
       });
 
@@ -90,7 +90,7 @@ const ChatModal = ({ isOpen, onClose, product, currentUser, otherUser, onMessage
     try {
       setLoading(true);
       const response = await axios.get(
-        `http://localhost:5000/chat/history/${product._id}/${otherUser._id}`,
+        `${import.meta.env.VITE_API_URL}/chat/history/${product._id}/${otherUser._id}`,
         { withCredentials: true }
       );
       

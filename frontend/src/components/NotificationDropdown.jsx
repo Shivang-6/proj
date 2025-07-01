@@ -16,7 +16,7 @@ const NotificationDropdown = ({ user }) => {
 
   const fetchNotifications = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/notifications', {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/notifications`, {
         withCredentials: true
       });
       if (response.data.success) {
@@ -29,7 +29,7 @@ const NotificationDropdown = ({ user }) => {
 
   const fetchUnreadCount = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/notifications/unread', {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/notifications/unread`, {
         withCredentials: true
       });
       if (response.data.success) {
@@ -42,7 +42,7 @@ const NotificationDropdown = ({ user }) => {
 
   const markAsRead = async (notificationId) => {
     try {
-      await axios.put(`http://localhost:5000/notifications/${notificationId}/read`, {}, {
+      await axios.put(`${import.meta.env.VITE_API_URL}/notifications/${notificationId}/read`, {}, {
         withCredentials: true
       });
       fetchNotifications();
@@ -55,7 +55,7 @@ const NotificationDropdown = ({ user }) => {
   const markAllAsRead = async () => {
     try {
       setLoading(true);
-      await axios.put('http://localhost:5000/notifications/read-all', {}, {
+      await axios.put(`${import.meta.env.VITE_API_URL}/notifications/read-all`, {}, {
         withCredentials: true
       });
       fetchNotifications();
@@ -69,7 +69,7 @@ const NotificationDropdown = ({ user }) => {
 
   const deleteNotification = async (notificationId) => {
     try {
-      await axios.delete(`http://localhost:5000/notifications/${notificationId}`, {
+      await axios.delete(`${import.meta.env.VITE_API_URL}/notifications/${notificationId}`, {
         withCredentials: true
       });
       fetchNotifications();

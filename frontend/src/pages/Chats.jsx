@@ -23,13 +23,13 @@ const Chats = () => {
         setLoading(true);
         
         // Fetch user data
-        const userRes = await axios.get("http://localhost:5000/auth/login/success", { 
+        const userRes = await axios.get(`${import.meta.env.VITE_API_URL}/auth/login/success`, { 
           withCredentials: true 
         });
         setUser(userRes.data.user);
         
         // Fetch conversations
-        const conversationsRes = await axios.get("http://localhost:5000/chat/conversations", {
+        const conversationsRes = await axios.get(`${import.meta.env.VITE_API_URL}/chat/conversations`, {
           withCredentials: true
         });
         
@@ -76,7 +76,7 @@ const Chats = () => {
 
   const loadConversations = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/chat/conversations", {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/chat/conversations`, {
         withCredentials: true
       });
       

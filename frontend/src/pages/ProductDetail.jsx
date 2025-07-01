@@ -51,18 +51,18 @@ const ProductDetail = () => {
         setLoading(true);
         
         // Fetch user data
-        const userRes = await axios.get("http://localhost:5000/auth/login/success", { 
+        const userRes = await axios.get(`${import.meta.env.VITE_API_URL}/auth/login/success`, { 
           withCredentials: true 
         });
         setUser(userRes.data.user);
         
         // Fetch product data
-        const productRes = await axios.get(`http://localhost:5000/products/${productId}`);
+        const productRes = await axios.get(`${import.meta.env.VITE_API_URL}/products/${productId}`);
         if (productRes.data.success) {
           setProduct(productRes.data.product);
           
           // Fetch related products
-          const relatedRes = await axios.get(`http://localhost:5000/products?category=${productRes.data.product.category}&limit=4&exclude=${productId}`);
+          const relatedRes = await axios.get(`${import.meta.env.VITE_API_URL}/products?category=${productRes.data.product.category}&limit=4&exclude=${productId}`);
           if (relatedRes.data.success) {
             setRelatedProducts(relatedRes.data.products);
           }
@@ -92,7 +92,7 @@ const ProductDetail = () => {
 
   const loadProductConversations = async (productId) => {
     try {
-      const response = await axios.get(`http://localhost:5000/chat/conversations`, {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/chat/conversations`, {
         withCredentials: true
       });
       

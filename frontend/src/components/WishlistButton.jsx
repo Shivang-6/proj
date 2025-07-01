@@ -13,7 +13,7 @@ const WishlistButton = ({ product, user, onWishlistChange }) => {
 
   const checkWishlistStatus = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/wishlist/check/${product._id}`, {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/wishlist/check/${product._id}`, {
         withCredentials: true
       });
       setIsInWishlist(response.data.isInWishlist);
@@ -31,12 +31,12 @@ const WishlistButton = ({ product, user, onWishlistChange }) => {
     setLoading(true);
     try {
       if (isInWishlist) {
-        await axios.delete(`http://localhost:5000/wishlist/${product._id}`, {
+        await axios.delete(`${import.meta.env.VITE_API_URL}/wishlist/${product._id}`, {
           withCredentials: true
         });
         setIsInWishlist(false);
       } else {
-        await axios.post(`http://localhost:5000/wishlist/${product._id}`, {}, {
+        await axios.post(`${import.meta.env.VITE_API_URL}/wishlist/${product._id}`, {}, {
           withCredentials: true
         });
         setIsInWishlist(true);

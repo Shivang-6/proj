@@ -21,7 +21,7 @@ const ProfileDropdown = ({ user }) => {
 
   const handleLogout = async () => {
     try {
-      await axios.get('http://localhost:5000/auth/logout', { withCredentials: true });
+      await axios.get(`${import.meta.env.VITE_API_URL}/auth/logout`, { withCredentials: true });
       navigate('/');
       setIsOpen(false);
     } catch (error) {

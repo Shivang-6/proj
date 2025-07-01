@@ -11,7 +11,7 @@ const DeleteConfirmationModal = ({ isOpen, onClose, product, onProductDeleted })
 
     try {
       const response = await axios.delete(
-        `http://localhost:5000/products/${product._id}`,
+        `${import.meta.env.VITE_API_URL}/products/${product._id}`,
         { withCredentials: true }
       );
 

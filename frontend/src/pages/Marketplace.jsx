@@ -33,7 +33,7 @@ const Marketplace = () => {
   // Fetch logged-in user
   useEffect(() => {
     axios
-      .get("http://localhost:5000/auth/login/success", { withCredentials: true })
+      .get(`${import.meta.env.VITE_API_URL}/auth/login/success`, { withCredentials: true })
       .then((res) => setUser(res.data.user))
       .catch((err) => console.log("Not logged in", err));
   }, []);
@@ -43,7 +43,7 @@ const Marketplace = () => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
-        const res = await axios.get("http://localhost:5000/products");
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/products`);
         if (res.data.success) {
           setProducts(res.data.products);
         } else {

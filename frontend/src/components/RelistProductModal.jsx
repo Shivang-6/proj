@@ -32,7 +32,7 @@ const RelistProductModal = ({ product, isOpen, onClose, onSuccess }) => {
 
     try {
       const response = await axios.post(
-        `http://localhost:5000/products/${product._id}/relist`,
+        `${import.meta.env.VITE_API_URL}/products/${product._id}/relist`,
         { quantity: parseInt(formData.quantity) },
         { withCredentials: true }
       );
@@ -69,7 +69,7 @@ const RelistProductModal = ({ product, isOpen, onClose, onSuccess }) => {
     try {
       // Update product with new details
       await axios.put(
-        `http://localhost:5000/products/${product._id}`,
+        `${import.meta.env.VITE_API_URL}/products/${product._id}`,
         {
           name: product.name,
           description: formData.description,
@@ -83,7 +83,7 @@ const RelistProductModal = ({ product, isOpen, onClose, onSuccess }) => {
 
       // Then re-list with new quantity
       const response = await axios.post(
-        `http://localhost:5000/products/${product._id}/relist`,
+        `${import.meta.env.VITE_API_URL}/products/${product._id}/relist`,
         { quantity: parseInt(formData.quantity) },
         { withCredentials: true }
       );

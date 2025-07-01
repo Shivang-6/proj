@@ -13,7 +13,7 @@ const PurchaseHistory = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/auth/login/success", { withCredentials: true })
+      .get(`${import.meta.env.VITE_API_URL}/auth/login/success`, { withCredentials: true })
       .then((res) => setUser(res.data.user))
       .catch((err) => {
         console.log("Not logged in", err);
@@ -26,12 +26,12 @@ const PurchaseHistory = () => {
       try {
         setLoading(true);
         setError("");
-        let endpoint = "http://localhost:5000/transactions/all";
+        let endpoint = `${import.meta.env.VITE_API_URL}/transactions/all`;
         
         if (activeTab === "purchases") {
-          endpoint = "http://localhost:5000/transactions/purchases";
+          endpoint = `${import.meta.env.VITE_API_URL}/transactions/purchases`;
         } else if (activeTab === "sales") {
-          endpoint = "http://localhost:5000/transactions/sales";
+          endpoint = `${import.meta.env.VITE_API_URL}/transactions/sales`;
         }
 
         console.log("Fetching transactions from:", endpoint);
@@ -335,7 +335,7 @@ const PurchaseHistory = () => {
                     <button 
                       onClick={async () => {
                         try {
-                          const response = await axios.get('http://localhost:5000/transactions/debug/user-transactions', { withCredentials: true });
+                          const response = await axios.get(`${import.meta.env.VITE_API_URL}/transactions/debug/user-transactions`, { withCredentials: true });
                           console.log('Debug response:', response.data);
                           alert(`Debug: Found ${response.data.transactionCount} transactions. Check console for details.`);
                         } catch (err) {

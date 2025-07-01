@@ -26,7 +26,7 @@ const Sell = () => {
   // Fetch user data
   useEffect(() => {
     axios
-      .get("http://localhost:5000/auth/login/success", { withCredentials: true })
+      .get(`${import.meta.env.VITE_API_URL}/auth/login/success`, { withCredentials: true })
       .then((res) => setUser(res.data.user))
       .catch((err) => {
         console.log("Not logged in", err);
@@ -159,7 +159,7 @@ const Sell = () => {
     });
 
     try {
-      const response = await axios.post("http://localhost:5000/products/add", data, {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/products/add`, data, {
         withCredentials: true,
         headers: {
           'Content-Type': 'multipart/form-data',
