@@ -8,6 +8,7 @@ import DeleteConfirmationModal from '../components/DeleteConfirmationModal.jsx';
 import PaymentModal from '../components/PaymentModal.jsx';
 import PaymentSuccessModal from '../components/PaymentSuccessModal.jsx';
 import ImageGallery from '../components/ImageGallery.jsx';
+import { FaStar } from 'react-icons/fa';
 
 const ProductDetail = () => {
   const { productId } = useParams();
@@ -44,6 +45,21 @@ const ProductDetail = () => {
     transaction: null
   });
 
+  // Review state
+  const [reviews, setReviews] = useState([]);
+  const [reviewLoading, setReviewLoading] = useState(true);
+  const [reviewError, setReviewError] = useState("");
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState("");
+  const [reviewSuccess, setReviewSuccess] = useState("");
+  const [hasReviewed, setHasReviewed] = useState(false);
+  const [canReview, setCanReview] = useState(false);
+
+  // Local state for editing review
+  const [editingReview, setEditingReview] = useState(null);
+  const [editRating, setEditRating] = useState(0);
+  const [editComment, setEditComment] = useState("");
+
   // Fetch user and product data
   useEffect(() => {
     const fetchData = async () => {
@@ -58,6 +74,8 @@ const ProductDetail = () => {
         const productRes = await axios.get(`${import.meta.env.VITE_API_URL}/products/${productId}`, { withCredentials: true });
         if (productRes.data.success) {
           setProduct(productRes.data.product);
+          if (productRes.data.avgRating) setAvgRating(productRes.data.avgRating);
+          if (productRes.data.reviewCount) setReviewCount(productRes.data.reviewCount);
           
           // Fetch related products
           const relatedRes = await axios.get(`${import.meta.env.VITE_API_URL}/products?category=${productRes.data.product.category}&limit=4&exclude=${productId}`, { withCredentials: true });
@@ -87,6 +105,62 @@ const ProductDetail = () => {
 
     fetchData();
   }, [productId]);
+
+  // Fetch reviews
+  useEffect(() => {
+    if (!product) return;
+    setReviewLoading(true);
+    axios.get(`${import.meta.env.VITE_API_URL}/products/${product._id}/reviews`)
+      .then(res => {
+        setReviews(res.data.reviews);
+        setReviewLoading(false);
+      })
+      .catch(() => {
+        setReviewError("Failed to load reviews");
+        setReviewLoading(false);
+      });
+  }, [product]);
+
+  // Check if user can review
+  useEffect(() => {
+    if (!user || !product) return;
+    axios.get(`${import.meta.env.VITE_API_URL}/products/${product._id}/reviews`)
+      .then(res => {
+        const already = res.data.reviews.some(r => r.user && r.user._id === user._id);
+        setHasReviewed(already);
+      });
+    // Check if user purchased (by trying to post a dummy review and catching 403)
+    axios.post(`${import.meta.env.VITE_API_URL}/products/${product._id}/review`, { rating: 5, comment: "dummy" }, { withCredentials: true })
+      .then(() => setCanReview(true))
+      .catch(err => {
+        if (err.response && err.response.status === 403) setCanReview(false);
+        else setCanReview(true);
+      });
+  }, [user, product]);
+
+  // Average rating
+  const avgRating = reviews.length ? (reviews.reduce((a, b) => a + b.rating, 0) / reviews.length).toFixed(1) : null;
+
+  // Submit review
+  const handleReviewSubmit = async (e) => {
+    e.preventDefault();
+    setReviewSuccess("");
+    setReviewError("");
+    try {
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}/products/${product._id}/review`,
+        { rating, comment },
+        { withCredentials: true }
+      );
+      setReviewSuccess("Review submitted!");
+      setReviews(prev => [...prev, res.data.review]);
+      setHasReviewed(true);
+      setRating(0);
+      setComment("");
+    } catch (err) {
+      setReviewError(err.response?.data?.message || "Failed to submit review");
+    }
+  };
 
   const loadProductConversations = async (productId) => {
     try {
@@ -274,6 +348,38 @@ const ProductDetail = () => {
       isOpen: false,
       transaction: null
     });
+  };
+
+  // Edit review handler
+  const handleEditReview = (review) => {
+    setEditingReview(review._id);
+    setEditRating(review.rating);
+    setEditComment(review.comment);
+  };
+  const handleUpdateReview = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.put(
+        `${import.meta.env.VITE_API_URL}/products/${product._id}/review`,
+        { rating: editRating, comment: editComment },
+        { withCredentials: true }
+      );
+      setReviews(reviews.map(r => r._id === editingReview ? res.data.review : r));
+      setEditingReview(null);
+    } catch (err) {
+      alert(err.response?.data?.message || "Failed to update review");
+    }
+  };
+  const handleDeleteReview = async () => {
+    if (!window.confirm('Are you sure you want to delete your review?')) return;
+    try {
+      await axios.delete(`${import.meta.env.VITE_API_URL}/products/${product._id}/review`, { withCredentials: true });
+      setReviews(reviews.filter(r => !(r.user && r.user._id === user._id)));
+      setHasReviewed(false);
+      setCanReview(true);
+    } catch (err) {
+      alert(err.response?.data?.message || "Failed to delete review");
+    }
   };
 
   if (loading) {
@@ -717,6 +823,112 @@ const ProductDetail = () => {
                   <span>Product ID: {product._id}</span>
                   <span>Views: {product.views || 0}</span>
                 </div>
+              </div>
+
+              {/* Reviews Section */}
+              <div className="p-6 border-t">
+                <h3 className="text-2xl font-bold mb-4 flex items-center gap-2">
+                  Reviews
+                  {(avgRating || productRes?.data?.avgRating) && (
+                    <span className="flex items-center gap-1 text-yellow-500 text-lg font-semibold">
+                      {avgRating || productRes?.data?.avgRating}
+                      <FaStar />
+                    </span>
+                  )}
+                  <span className="text-gray-500 text-base">({reviewCount || reviews.length})</span>
+                </h3>
+                {reviewLoading ? (
+                  <div className="text-gray-500">Loading reviews...</div>
+                ) : reviews.length === 0 ? (
+                  <div className="text-gray-500">No reviews yet.</div>
+                ) : (
+                  <div className="space-y-4 mb-6">
+                    {reviews.map(r => (
+                      <div key={r._id} className="bg-gray-50 rounded p-4">
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="text-yellow-500 flex items-center">
+                            {[...Array(r.rating)].map((_, i) => <FaStar key={i} />)}
+                          </span>
+                          <span className="font-semibold text-gray-800">{r.user?.displayName || r.user?.name || 'User'}</span>
+                          <span className="text-xs text-gray-400 ml-2">{r.createdAt ? new Date(r.createdAt).toLocaleDateString() : ''}</span>
+                          {user && r.user && r.user._id === user._id && !editingReview && (
+                            <>
+                              <button onClick={() => handleEditReview(r)} className="ml-2 text-blue-600 hover:underline text-xs">Edit</button>
+                              <button onClick={handleDeleteReview} className="ml-2 text-red-500 hover:underline text-xs">Delete</button>
+                            </>
+                          )}
+                        </div>
+                        {editingReview === r._id ? (
+                          <form onSubmit={handleUpdateReview} className="mt-2">
+                            <div className="flex items-center gap-2 mb-2">
+                              <span className="font-medium">Edit Rating:</span>
+                              {[1,2,3,4,5].map(star => (
+                                <button
+                                  type="button"
+                                  key={star}
+                                  onClick={() => setEditRating(star)}
+                                  className={star <= editRating ? 'text-yellow-500' : 'text-gray-300'}
+                                >
+                                  <FaStar />
+                                </button>
+                              ))}
+                            </div>
+                            <textarea
+                              className="w-full border rounded p-2 mb-2"
+                              value={editComment}
+                              onChange={e => setEditComment(e.target.value)}
+                              required
+                            />
+                            <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition mr-2">Save</button>
+                            <button type="button" onClick={() => setEditingReview(null)} className="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 transition">Cancel</button>
+                          </form>
+                        ) : (
+                          <div className="text-gray-700">{r.comment}</div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+                {/* Review Form */}
+                {user && canReview && !hasReviewed && (
+                  <form onSubmit={handleReviewSubmit} className="bg-gray-100 rounded p-4">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="font-medium">Your Rating:</span>
+                      {[1,2,3,4,5].map(star => (
+                        <button
+                          type="button"
+                          key={star}
+                          onClick={() => setRating(star)}
+                          className={star <= rating ? 'text-yellow-500' : 'text-gray-300'}
+                        >
+                          <FaStar />
+                        </button>
+                      ))}
+                    </div>
+                    <textarea
+                      className="w-full border rounded p-2 mb-2"
+                      placeholder="Write your review..."
+                      value={comment}
+                      onChange={e => setComment(e.target.value)}
+                      required
+                    />
+                    <button
+                      type="submit"
+                      className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+                      disabled={rating === 0}
+                    >
+                      Submit Review
+                    </button>
+                    {reviewSuccess && <div className="text-green-600 mt-2">{reviewSuccess}</div>}
+                    {reviewError && <div className="text-red-500 mt-2">{reviewError}</div>}
+                  </form>
+                )}
+                {user && hasReviewed && (
+                  <div className="text-green-600 font-medium">You have already reviewed this product.</div>
+                )}
+                {user && !canReview && (
+                  <div className="text-gray-500">You can only review products you have purchased.</div>
+                )}
               </div>
             </div>
           </div>

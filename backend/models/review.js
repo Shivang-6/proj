@@ -6,41 +6,20 @@ const reviewSchema = new mongoose.Schema({
     ref: 'Product',
     required: true
   },
-  reviewer: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
-  },
-  seller: {
+  user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true
   },
   rating: {
     type: Number,
-    required: true,
     min: 1,
-    max: 5
-  },
-  title: {
-    type: String,
-    required: true,
-    maxlength: 100
-  },
-  comment: {
-    type: String,
-    required: true,
-    maxlength: 500
-  },
-  transactionId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Transaction',
+    max: 5,
     required: true
   },
-  helpful: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
-  }],
+  comment: {
+    type: String
+  },
   createdAt: {
     type: Date,
     default: Date.now
@@ -52,7 +31,7 @@ const reviewSchema = new mongoose.Schema({
 });
 
 // Ensure one review per transaction
-reviewSchema.index({ transactionId: 1 }, { unique: true });
+reviewSchema.index({ product: 1, user: 1 }, { unique: true });
 
 // Update the updatedAt field on save
 reviewSchema.pre('save', function(next) {

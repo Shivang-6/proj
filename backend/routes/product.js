@@ -4,6 +4,8 @@ import multer from "multer";
 // import { v2 as cloudinary } from "cloudinary";
 import Product from "../models/product.js";
 import cloudinary from "../config/cloudinary.js";
+import Review from '../models/review.js';
+import Transaction from '../models/transaction.js';
 
 const router = express.Router();
 
@@ -17,7 +19,17 @@ router.get("/", async (req, res) => {
     const products = await Product.find({ isAvailable: true, quantity: { $gt: 0 } })
       .sort({ createdAt: -1 })
       .populate('seller', 'name displayName googleId email');
-    res.status(200).json({ success: true, products });
+    // For each product, get avgRating and reviewCount
+    const productsWithRatings = await Promise.all(products.map(async (product) => {
+      const reviews = await Review.find({ product: product._id });
+      const avgRating = reviews.length ? (reviews.reduce((a, b) => a + b.rating, 0) / reviews.length) : null;
+      return {
+        ...product.toObject(),
+        avgRating,
+        reviewCount: reviews.length
+      };
+    }));
+    res.status(200).json({ success: true, products: productsWithRatings });
   } catch (err) {
     console.error(err);
     res.status(500).json({ success: false, message: "Failed to fetch products" });
@@ -39,7 +51,16 @@ router.get("/:id", async (req, res) => {
       });
     }
 
-    res.status(200).json({ success: true, product });
+    // Get reviews for this product
+    const reviews = await Review.find({ product: product._id });
+    const avgRating = reviews.length ? (reviews.reduce((a, b) => a + b.rating, 0) / reviews.length) : null;
+
+    res.status(200).json({ 
+      success: true, 
+      product, 
+      avgRating, 
+      reviewCount: reviews.length 
+    });
   } catch (err) {
     console.error("Error fetching product:", err);
     res.status(500).json({ 
@@ -475,6 +496,71 @@ router.put("/:id/test-sold-out", async (req, res) => {
       success: false, 
       message: "Failed to mark product as sold out" 
     });
+  }
+});
+
+// Add a review to a product (only if purchased)
+router.post('/:id/review', async (req, res) => {
+  try {
+    if (!req.user) return res.status(401).json({ success: false, message: 'Login required' });
+    const { rating, comment } = req.body;
+    const productId = req.params.id;
+    // Check if user purchased the product
+    const purchased = await Transaction.findOne({ buyer: req.user._id, product: productId });
+    if (!purchased) {
+      return res.status(403).json({ success: false, message: 'You can only review products you have purchased.' });
+    }
+    // Check if already reviewed
+    const alreadyReviewed = await Review.findOne({ product: productId, user: req.user._id });
+    if (alreadyReviewed) {
+      return res.status(409).json({ success: false, message: 'You have already reviewed this product.' });
+    }
+    const review = new Review({ product: productId, user: req.user._id, rating, comment });
+    await review.save();
+    res.status(201).json({ success: true, message: 'Review added', review });
+  } catch (err) {
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+});
+
+// Get all reviews for a product
+router.get('/:id/reviews', async (req, res) => {
+  try {
+    const productId = req.params.id;
+    const reviews = await Review.find({ product: productId }).populate('user', 'name displayName');
+    res.json({ success: true, reviews });
+  } catch (err) {
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+});
+
+// Update a review (user can only update their own review)
+router.put('/:id/review', async (req, res) => {
+  try {
+    if (!req.user) return res.status(401).json({ success: false, message: 'Login required' });
+    const { rating, comment } = req.body;
+    const productId = req.params.id;
+    const review = await Review.findOne({ product: productId, user: req.user._id });
+    if (!review) return res.status(404).json({ success: false, message: 'Review not found' });
+    if (rating) review.rating = rating;
+    if (comment) review.comment = comment;
+    await review.save();
+    res.json({ success: true, message: 'Review updated', review });
+  } catch (err) {
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+});
+
+// Delete a review (user can only delete their own review)
+router.delete('/:id/review', async (req, res) => {
+  try {
+    if (!req.user) return res.status(401).json({ success: false, message: 'Login required' });
+    const productId = req.params.id;
+    const review = await Review.findOneAndDelete({ product: productId, user: req.user._id });
+    if (!review) return res.status(404).json({ success: false, message: 'Review not found' });
+    res.json({ success: true, message: 'Review deleted' });
+  } catch (err) {
+    res.status(500).json({ success: false, message: 'Server error' });
   }
 });
 

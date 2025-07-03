@@ -6,6 +6,7 @@ import ProfileDropdown from "../components/ProfileDropdown.jsx";
 import EditProductModal from "../components/EditProductModal.jsx";
 import DeleteConfirmationModal from "../components/DeleteConfirmationModal.jsx";
 import ImageGallery from "../components/ImageGallery.jsx";
+import { FaStar } from 'react-icons/fa';
 
 const Marketplace = () => {
   const [user, setUser] = useState(null);
@@ -141,12 +142,15 @@ const Marketplace = () => {
 
   // Filter and search products
   const filteredProducts = products.filter(product => {
+    // Exclude products listed by the logged-in user
+    if (user && product.seller && product.seller._id === user._id) {
+      return false;
+    }
     const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          product.description.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;
     const matchesPrice = (!priceRange.min || product.price >= parseInt(priceRange.min)) &&
                         (!priceRange.max || product.price <= parseInt(priceRange.max));
-    
     return matchesSearch && matchesCategory && matchesPrice;
   });
 
@@ -178,6 +182,14 @@ const Marketplace = () => {
             >
               Sell Product
             </Link>
+            {user && (
+              <Link
+                to="/my-products"
+                className="text-cyan-400 hover:text-cyan-300 font-medium transition"
+              >
+                My Products
+              </Link>
+            )}
             {user ? (
               <ProfileDropdown user={user} />
             ) : (
@@ -322,6 +334,13 @@ const Marketplace = () => {
                       <div className="absolute top-2 right-2 bg-green-500 text-white px-2 py-1 rounded text-sm font-medium z-10">
                         ₹{product.price}
                       </div>
+                      {product.avgRating && (
+                        <div className="absolute bottom-2 left-2 bg-white/80 rounded px-2 py-1 flex items-center gap-1 text-yellow-500 text-xs font-semibold shadow">
+                          {product.avgRating.toFixed(1)}
+                          <FaStar />
+                          <span className="text-gray-500 ml-1">({product.reviewCount})</span>
+                        </div>
+                      )}
                     </div>
                   </Link>
                   <div className="p-4">
