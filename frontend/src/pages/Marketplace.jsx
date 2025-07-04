@@ -7,6 +7,7 @@ import EditProductModal from "../components/EditProductModal.jsx";
 import DeleteConfirmationModal from "../components/DeleteConfirmationModal.jsx";
 import ImageGallery from "../components/ImageGallery.jsx";
 import { FaStar } from 'react-icons/fa';
+import ProductCard from '../components/ProductCard.jsx';
 
 const Marketplace = () => {
   const [user, setUser] = useState(null);
@@ -171,39 +172,6 @@ const Marketplace = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Navbar */}
-      <header className="bg-white shadow sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-blue-600">CampusKart</h1>
-          <nav className="flex gap-4 items-center">
-            <Link
-              to="/sell"
-              className="text-green-600 hover:text-green-800 font-medium transition"
-            >
-              Sell Product
-            </Link>
-            {user && (
-              <Link
-                to="/my-products"
-                className="text-cyan-400 hover:text-cyan-300 font-medium transition"
-              >
-                My Products
-              </Link>
-            )}
-            {user ? (
-              <ProfileDropdown user={user} />
-            ) : (
-              <Link
-                to="/login"
-                className="text-blue-600 hover:text-blue-800 font-medium transition"
-              >
-                Login
-              </Link>
-            )}
-          </nav>
-        </div>
-      </header>
-
       {/* Hero Section */}
       <section className="text-center py-12">
         <h2 className="text-3xl font-bold text-gray-800 mb-2">
@@ -221,7 +189,7 @@ const Marketplace = () => {
 
       {/* Product Listing */}
       <section className="max-w-7xl mx-auto px-4 py-10">
-        <h3 className="text-2xl font-semibold text-gray-800 mb-6">Latest Listings</h3>
+        <h3 className="text-2xl font-semibold text-cyan-100 mb-6 drop-shadow">Latest Listings</h3>
         
         {/* Search and Filter Section */}
         <div className="bg-white rounded-lg shadow p-6 mb-8">
@@ -317,116 +285,12 @@ const Marketplace = () => {
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {sortedProducts.length > 0 ? (
-              sortedProducts.map((product) => (
-                <div
-                  key={product._id}
-                  className="bg-white rounded-lg shadow hover:shadow-lg transition overflow-hidden"
-                >
-                  <Link to={`/product/${product._id}`} className="block">
-                    <div className="relative h-48 overflow-hidden">
-                      <ImageGallery 
-                        images={product.imageUrls || [product.imageUrl]} 
-                        productName={product.name}
-                        compact={true}
-                      />
-                      <div className="absolute top-2 right-2 bg-green-500 text-white px-2 py-1 rounded text-sm font-medium z-10">
-                        ₹{product.price}
-                      </div>
-                      {product.avgRating && (
-                        <div className="absolute bottom-2 left-2 bg-white/80 rounded px-2 py-1 flex items-center gap-1 text-yellow-500 text-xs font-semibold shadow">
-                          {product.avgRating.toFixed(1)}
-                          <FaStar />
-                          <span className="text-gray-500 ml-1">({product.reviewCount})</span>
-                        </div>
-                      )}
-                    </div>
-                  </Link>
-                  <div className="p-4">
-                    <Link to={`/product/${product._id}`} className="block">
-                      <h4 className="text-lg font-semibold text-gray-800 mb-2 hover:text-blue-600 transition">{product.name}</h4>
-                    </Link>
-                    <p className="text-gray-600 text-sm line-clamp-2 mb-3">{product.description}</p>
-                    <div className="flex justify-between items-center mb-3">
-                      <span className="text-green-600 font-bold text-lg">₹{product.price}</span>
-                      <span className="text-gray-400 text-xs">
-                        {new Date(product.createdAt).toLocaleDateString()}
-                      </span>
-                    </div>
-                    
-                    {/* Seller Info */}
-                    {product.seller && (
-                      <div className="mb-3 p-2 bg-gray-50 rounded">
-                        <p className="text-xs text-gray-500 mb-1">Seller</p>
-                        <Link 
-                          to={`/profile/${product.seller._id}`}
-                          className="text-sm text-blue-600 hover:text-blue-800 font-medium"
-                        >
-                          {product.seller.displayName || product.seller.name}
-                        </Link>
-                      </div>
-                    )}
-                    
-                    {/* Action Buttons */}
-                    <div className="flex gap-2">
-                      <Link
-                        to={`/product/${product._id}`}
-                        className="flex-1 bg-gray-500 text-white px-3 py-2 rounded text-sm hover:bg-gray-600 transition flex items-center justify-center gap-1"
-                      >
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                        </svg>
-                        View Details
-                      </Link>
-                      {isProductOwner(product) && (
-                        <>
-                          <button
-                            onClick={() => handleEdit(product)}
-                            className="flex-1 bg-yellow-500 text-white px-3 py-2 rounded text-sm hover:bg-yellow-600 transition flex items-center justify-center gap-1"
-                          >
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                            </svg>
-                            Edit
-                          </button>
-                          <button
-                            onClick={() => handleDelete(product)}
-                            className="flex-1 bg-red-500 text-white px-3 py-2 rounded text-sm hover:bg-red-600 transition flex items-center justify-center gap-1"
-                          >
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                            </svg>
-                            Delete
-                          </button>
-                        </>
-                      )}
-                      <button
-                        onClick={() => handleChat(product)}
-                        className="flex-1 bg-blue-500 text-white px-3 py-2 rounded text-sm hover:bg-blue-600 transition flex items-center justify-center gap-1"
-                      >
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                        </svg>
-                        Chat
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <div className="col-span-full text-center py-12">
-                <div className="text-gray-400 text-6xl mb-4">📦</div>
-                <p className="text-gray-500 text-lg mb-4">No products available yet.</p>
-                <p className="text-gray-400">Be the first to list something!</p>
-                <Link to="/sell">
-                  <button className="mt-4 bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition">
-                    Sell Your First Product
-                  </button>
-                </Link>
-              </div>
-            )}
+          <div className="bg-white/10 backdrop-blur-md rounded-3xl shadow-2xl p-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+              {sortedProducts.map(product => (
+                <ProductCard key={product._id} product={product} onChat={handleChat} onEdit={handleEdit} onDelete={handleDelete} />
+              ))}
+            </div>
           </div>
         )}
       </section>
@@ -455,11 +319,6 @@ const Marketplace = () => {
         product={deleteModal.product}
         onProductDeleted={handleProductDeleted}
       />
-
-      {/* Footer */}
-      <footer className="text-center py-6 text-sm text-gray-400">
-        © {new Date().getFullYear()} CampusKart. All rights reserved.
-      </footer>
     </div>
   );
 };

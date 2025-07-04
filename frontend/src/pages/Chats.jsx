@@ -132,37 +132,15 @@ const Chats = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Navbar */}
-      <header className="bg-white shadow sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-          <Link to="/landing" className="text-2xl font-bold text-blue-600">
-            CampusKart
-          </Link>
-          <nav className="flex gap-4 items-center">
-            <Link
-              to="/sell"
-              className="text-green-600 hover:text-green-800 font-medium transition"
-            >
-              Sell Product
-            </Link>
-            <Link
-              to="/landing"
-              className="text-blue-600 hover:text-blue-800 font-medium transition"
-            >
-              Marketplace
-            </Link>
-            {user && <ProfileDropdown user={user} />}
-          </nav>
-        </div>
-      </header>
-
       {/* Main Content */}
       <div className="max-w-4xl mx-auto px-4 py-8">
-        <div className="bg-white rounded-lg shadow">
+        <div className="bg-white/80 backdrop-blur rounded-3xl shadow-2xl p-0 md:p-8">
           {/* Header */}
-          <div className="p-6 border-b">
-            <h1 className="text-2xl font-bold text-gray-800 mb-2">My Conversations</h1>
-            <p className="text-gray-600">
+          <div className="p-6 border-b border-blue-100 bg-gradient-to-r from-blue-50 to-purple-50 rounded-t-3xl">
+            <h1 className="text-3xl font-bold text-blue-800 mb-2 flex items-center gap-2">
+              <span>💬</span> My Conversations
+            </h1>
+            <p className="text-gray-500">
               Chat with buyers and sellers about your products
             </p>
           </div>
@@ -176,67 +154,47 @@ const Chats = () => {
                   const product = conversation._id.product;
                   const lastMessage = conversation.lastMessage;
                   const isFromMe = lastMessage.sender._id === user._id;
-                  
+                  const unread = conversation.unreadCount || 0;
                   return (
                     <div
                       key={`${conversation._id.product._id}-${conversation._id.otherUser._id}`}
-                      className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition cursor-pointer"
+                      className="bg-white/90 backdrop-blur border border-blue-100 rounded-2xl p-4 flex items-center gap-4 shadow hover:shadow-lg transition cursor-pointer hover:bg-blue-50"
                       onClick={() => handleChat(conversation)}
                     >
-                      <div className="flex items-start space-x-4">
-                        {/* Product Image */}
-                        <div className="w-16 h-16 rounded-lg overflow-hidden">
-                          <ImageGallery 
-                            images={product.imageUrls || [product.imageUrl]} 
-                            productName={product.name}
-                            compact={true}
-                          />
-                        </div>
-                        
-                        {/* Conversation Details */}
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center justify-between mb-2">
-                            <div className="flex items-center space-x-3">
-                              <img
-                                src={otherUser.profilePicture || "https://placehold.co/40x40?text=U"}
-                                alt={otherUser.displayName || otherUser.name}
-                                className="w-10 h-10 rounded-full object-cover border-2 border-blue-200"
-                              />
-                              <div>
-                                <h3 className="font-semibold text-gray-800">
-                                  {otherUser.displayName || otherUser.name}
-                                </h3>
-                                <Link 
-                                  to={`/product/${product._id}`}
-                                  className="text-sm text-gray-500 hover:text-blue-600 transition"
-                                  onClick={(e) => e.stopPropagation()}
-                                >
-                                  {product.name}
-                                </Link>
-                              </div>
-                            </div>
-                            <span className="text-sm text-gray-400">
-                              {formatTime(lastMessage.timestamp)}
+                      {/* Product Image */}
+                      <div className="w-16 h-16 rounded-xl overflow-hidden border border-blue-100 bg-gradient-to-br from-blue-100 to-purple-100">
+                        <ImageGallery 
+                          images={product.imageUrls || [product.imageUrl]} 
+                          productName={product.name}
+                          compact={true}
+                        />
+                      </div>
+                      {/* Conversation Details */}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between mb-1">
+                          <div className="flex items-center gap-2">
+                            <img
+                              src={otherUser.profilePicture || 'https://placehold.co/32x32?text=U'}
+                              alt={otherUser.displayName || otherUser.name}
+                              className="w-8 h-8 rounded-full object-cover border border-blue-200"
+                            />
+                            <span className="font-semibold text-blue-700 text-base">
+                              {otherUser.displayName || otherUser.name}
                             </span>
+                            <span className="text-xs text-gray-400 ml-2">{formatTime(lastMessage.timestamp)}</span>
                           </div>
-                          
-                          <div className="bg-gray-50 p-3 rounded border-l-4 border-blue-500">
-                            <p className="text-gray-700 text-sm line-clamp-2 mb-2">
-                              <span className={`font-medium ${isFromMe ? 'text-blue-600' : 'text-gray-800'}`}>
-                                {isFromMe ? 'You: ' : `${otherUser.displayName || otherUser.name}: `}
-                              </span>
-                              {lastMessage.content}
-                            </p>
-                            
-                            <div className="flex items-center justify-between">
-                              <span className="text-xs text-gray-400">
-                                {formatDate(lastMessage.timestamp)}
-                              </span>
-                              <span className="text-sm font-medium text-green-600">
-                                ₹{product.price}
-                              </span>
-                            </div>
-                          </div>
+                          {unread > 0 && (
+                            <span className="ml-2 bg-red-500 text-white text-xs rounded-full px-2 py-0.5 font-bold">
+                              {unread > 9 ? '9+' : unread}
+                            </span>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-gray-700 font-medium truncate max-w-xs">{product.name}</span>
+                        </div>
+                        <div className="text-gray-500 text-sm truncate max-w-xs">
+                          {isFromMe ? <span className="text-blue-500 font-semibold">You: </span> : null}
+                          {lastMessage.content}
                         </div>
                       </div>
                     </div>
@@ -244,27 +202,7 @@ const Chats = () => {
                 })}
               </div>
             ) : (
-              <div className="text-center py-12">
-                <div className="text-gray-400 text-6xl mb-4">💬</div>
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">No conversations yet</h3>
-                <p className="text-gray-600 mb-6">
-                  Start chatting with buyers and sellers about products
-                </p>
-                <div className="space-x-4">
-                  <Link
-                    to="/landing"
-                    className="inline-block bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition"
-                  >
-                    Browse Products
-                  </Link>
-                  <Link
-                    to="/sell"
-                    className="inline-block bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition"
-                  >
-                    Sell a Product
-                  </Link>
-                </div>
-              </div>
+              <div className="text-center text-gray-500">No conversations yet.</div>
             )}
           </div>
         </div>

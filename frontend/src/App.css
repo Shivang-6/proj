@@ -43,3 +43,7 @@
 .overflow-y-auto::-webkit-scrollbar-thumb:hover {
   background: #a8a8a8;
 }
+
+@media (forced-colors: active) {
+  /* your styles */
+}

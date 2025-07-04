@@ -2,6 +2,7 @@ import express from "express";
 import passport from "passport";
 import bcrypt from "bcryptjs";
 import User from "../models/user.js";
+import Product from "../models/product.js";
 
 const router = express.Router();
 
@@ -88,6 +89,17 @@ router.post("/login", async (req, res) => {
     });
   } catch (err) {
     res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
+router.get("/", async (req, res) => {
+  try {
+    const products = await Product.find({ isAvailable: true, quantity: { $gt: 0 } })
+      .sort({ createdAt: -1 })
+      .populate('seller', 'name displayName googleId email');
+    res.status(200).json({ success: true, products });
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Failed to fetch products" });
   }
 });
 

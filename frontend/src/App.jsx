@@ -11,12 +11,28 @@ import PurchaseHistory from "./pages/PurchaseHistory.jsx";
 import Chats from "./pages/Chats.jsx";
 import Signup from "./pages/Signup.jsx";
 import MyProducts from "./pages/MyProducts.jsx";
-import "./App.css"; 
-
+import Footer from "./components/Footer.jsx";
+import "./App.css";
+import Navbar from "./components/Navbar.jsx";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const App = () => {
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_API_URL}/auth/login/success`, { withCredentials: true })
+      .then((res) => setUser(res.data.user))
+      .catch(() => setUser(null));
+  }, []);
+  const handleLogout = async () => {
+    await axios.get(`${import.meta.env.VITE_API_URL}/auth/logout`, { withCredentials: true });
+    setUser(null);
+    window.location.href = "/login";
+  };
   return (
     <Router>
+      <Navbar user={user} onLogout={handleLogout} />
       <Routes>
         <Route path="/" element={<Marketplace />} />
         <Route path="/login" element={<Login />} />
@@ -30,6 +46,7 @@ const App = () => {
         <Route path="/history" element={<PurchaseHistory />} />
         <Route path="/chats" element={<Chats />} />
       </Routes>
+      <Footer />
     </Router>
   );
 };

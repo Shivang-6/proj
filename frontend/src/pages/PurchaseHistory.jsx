@@ -232,29 +232,6 @@ const PurchaseHistory = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-          <Link to="/landing" className="text-2xl font-bold text-blue-600">
-            CampusKart
-          </Link>
-          <nav className="flex gap-4 items-center">
-            <Link
-              to="/sell"
-              className="text-green-600 hover:text-green-800 font-medium transition"
-            >
-              Sell Product
-            </Link>
-            <Link
-              to="/landing"
-              className="text-blue-600 hover:text-blue-800 font-medium transition"
-            >
-              Marketplace
-            </Link>
-            {user && <ProfileDropdown user={user} />}
-          </nav>
-        </div>
-      </header>
-
       <div className="max-w-6xl mx-auto px-4 py-8">
         <div className="bg-white rounded-lg shadow">
           <div className="p-6 border-b">

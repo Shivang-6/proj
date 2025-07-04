@@ -2,7 +2,6 @@ import express from "express";
 import razorpay from "../config/razorpay.js";
 import Transaction from "../models/transaction.js";
 import Product from "../models/product.js";
-import Notification from "../models/notification.js";
 import crypto from "crypto";
 
 const router = express.Router();
@@ -156,17 +155,6 @@ router.post("/verify-payment", async (req, res) => {
       product.isAvailable = false;
       product.soldOutNotified = true;
       console.log(`Product ${product.name} is now sold out and marked as unavailable`);
-      
-      // Create notification for seller
-      const notification = new Notification({
-        user: product.seller,
-        type: 'product_sold_out',
-        title: 'Product Sold Out!',
-        message: `Your product "${product.name}" has been sold out. You can re-list it anytime.`,
-        product: product._id
-      });
-      await notification.save();
-      console.log(`Created sold-out notification for seller ${product.seller}`);
     }
 
     await product.save();
@@ -180,17 +168,6 @@ router.post("/verify-payment", async (req, res) => {
     transaction.notes = `Payment completed successfully for ${product.name}`;
 
     await transaction.save();
-
-    // Create notification for seller about the sale
-    const saleNotification = new Notification({
-      user: product.seller,
-      type: 'product_sold',
-      title: 'Product Sold!',
-      message: `Your product "${product.name}" has been sold for ₹${transaction.price}.`,
-      product: product._id,
-      transaction: transaction._id
-    });
-    await saleNotification.save();
 
     // Populate transaction details for response
     await transaction.populate('product', 'name description imageUrl');

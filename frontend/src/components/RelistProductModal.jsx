@@ -130,7 +130,7 @@ const RelistProductModal = ({ product, isOpen, onClose, onSuccess }) => {
               <ImageGallery 
                 images={product.imageUrls || [product.imageUrl]} 
                 productName={product.name}
-                compact={true}
+                editable={true}
               />
             </div>
             <div className="flex-1">

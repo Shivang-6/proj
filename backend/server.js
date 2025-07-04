@@ -8,7 +8,6 @@ import chatRoutes from "./routes/chat.js";
 import profileRoutes from "./routes/profile.js";
 import transactionRoutes from "./routes/transactions.js";
 import paymentRoutes from "./routes/payment.js";
-import notificationRoutes from "./routes/notifications.js";
 import cors from 'cors';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
@@ -66,7 +65,6 @@ app.use("/chat", chatRoutes);
 app.use("/profile", profileRoutes);
 app.use("/transactions", transactionRoutes);
 app.use("/payment", paymentRoutes);
-app.use("/notifications", notificationRoutes);
 
 // 📦 MongoDB
 mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/campuskart')

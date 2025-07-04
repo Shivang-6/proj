@@ -104,7 +104,7 @@ const NotificationDropdown = ({ user }) => {
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-5 5v-5zM10 3a6 6 0 00-6 6v4a6 6 0 006 6h4a6 6 0 006-6V9a6 6 0 00-6-6H10z" />
         </svg>
-        {unreadCount > 0 && (
+        {(unreadCount > 0) && (
           <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
             {unreadCount > 9 ? '9+' : unreadCount}
           </span>

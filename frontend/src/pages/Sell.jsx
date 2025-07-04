@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import ProfileDropdown from "../components/ProfileDropdown.jsx";
+import ImageGallery from "../components/ImageGallery.jsx";
 
 const Sell = () => {
   const [user, setUser] = useState(null);
@@ -225,24 +226,6 @@ const Sell = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Navbar */}
-      <header className="bg-white shadow sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-          <Link to="/landing" className="text-2xl font-bold text-blue-600">
-            CampusKart
-          </Link>
-          <nav className="flex gap-4 items-center">
-            <Link
-              to="/landing"
-              className="text-blue-600 hover:text-blue-800 font-medium transition"
-            >
-              Marketplace
-            </Link>
-            {user && <ProfileDropdown user={user} />}
-          </nav>
-        </div>
-      </header>
-
       {/* Main Content */}
       <div className="max-w-2xl mx-auto px-4 py-8">
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">

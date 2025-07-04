@@ -1,11 +1,11 @@
 // backend/routes/product.js
 import express from "express";
 import multer from "multer";
-// import { v2 as cloudinary } from "cloudinary";
 import Product from "../models/product.js";
 import cloudinary from "../config/cloudinary.js";
 import Review from '../models/review.js';
 import Transaction from '../models/transaction.js';
+import User from '../models/user.js';
 
 const router = express.Router();
 
@@ -13,12 +13,13 @@ const router = express.Router();
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-// GET /products - Get all products (only available ones)
+// GET /products - Get all products (only available ones and approved)
 router.get("/", async (req, res) => {
   try {
     const products = await Product.find({ isAvailable: true, quantity: { $gt: 0 } })
       .sort({ createdAt: -1 })
       .populate('seller', 'name displayName googleId email');
+    
     // For each product, get avgRating and reviewCount
     const productsWithRatings = await Promise.all(products.map(async (product) => {
       const reviews = await Review.find({ product: product._id });
@@ -29,10 +30,41 @@ router.get("/", async (req, res) => {
         reviewCount: reviews.length
       };
     }));
+    
     res.status(200).json({ success: true, products: productsWithRatings });
   } catch (err) {
     console.error(err);
     res.status(500).json({ success: false, message: "Failed to fetch products" });
+  }
+});
+
+// GET /products/seller/:sellerId - Get all products by a specific seller (including sold out)
+router.get("/seller/:sellerId", async (req, res) => {
+  try {
+    const { sellerId } = req.params;
+    
+    const products = await Product.find({ seller: sellerId })
+      .sort({ createdAt: -1 })
+      .populate('seller', 'name displayName googleId email');
+    
+    // For each product, get avgRating and reviewCount
+    const productsWithRatings = await Promise.all(products.map(async (product) => {
+      const reviews = await Review.find({ product: product._id });
+      const avgRating = reviews.length ? (reviews.reduce((a, b) => a + b.rating, 0) / reviews.length) : null;
+      return {
+        ...product.toObject(),
+        avgRating,
+        reviewCount: reviews.length
+      };
+    }));
+    
+    res.status(200).json({ success: true, products: productsWithRatings });
+  } catch (err) {
+    console.error("Error fetching seller products:", err);
+    res.status(500).json({ 
+      success: false, 
+      message: "Failed to fetch seller products" 
+    });
   }
 });
 
@@ -70,7 +102,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// POST /products/add
+// POST /products/add - Add a new product (requires authentication)
 router.post("/add", upload.array("images", 5), async (req, res) => {
   try {
     console.log("Received request body:", req.body);
@@ -146,7 +178,7 @@ router.post("/add", upload.array("images", 5), async (req, res) => {
       condition: condition || 'good',
       quantity: productQuantity,
       imageUrls: imageUrls,
-      seller: sellerId
+      seller: sellerId,
     });
 
     await product.save();
@@ -167,7 +199,7 @@ router.post("/add", upload.array("images", 5), async (req, res) => {
   }
 });
 
-// PUT /products/:id - Update a product
+// PUT /products/:id - Update a product (requires authentication)
 router.put("/:id", upload.array("images", 5), async (req, res) => {
   try {
     const { id } = req.params;
@@ -285,7 +317,7 @@ router.put("/:id", upload.array("images", 5), async (req, res) => {
   }
 });
 
-// DELETE /products/:id - Delete a product
+// DELETE /products/:id - Delete a product (requires authentication)
 router.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -331,7 +363,7 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-// POST /products/:id/relist - Re-list a sold-out product
+// POST /products/:id/relist - Re-list a sold-out product (requires authentication)
 router.post("/:id/relist", async (req, res) => {
   try {
     const { id } = req.params;
@@ -402,121 +434,21 @@ router.post("/:id/relist", async (req, res) => {
   }
 });
 
-// GET /products/seller/:sellerId - Get all products by a specific seller (including sold out)
-router.get("/seller/:sellerId", async (req, res) => {
-  try {
-    const { sellerId } = req.params;
-    
-    const products = await Product.find({ seller: sellerId })
-      .sort({ createdAt: -1 })
-      .populate('seller', 'name displayName googleId email');
-    
-    res.status(200).json({ success: true, products });
-  } catch (err) {
-    console.error("Error fetching seller products:", err);
-    res.status(500).json({ 
-      success: false, 
-      message: "Failed to fetch seller products" 
-    });
-  }
-});
-
-// Debug endpoint to check product status
-router.get("/debug/product/:productId", async (req, res) => {
-  try {
-    const { productId } = req.params;
-    
-    const product = await Product.findById(productId);
-    if (!product) {
-      return res.status(404).json({ success: false, message: "Product not found" });
-    }
-    
-    res.json({
-      success: true,
-      product: {
-        _id: product._id,
-        name: product.name,
-        quantity: product.quantity,
-        isAvailable: product.isAvailable,
-        soldOutNotified: product.soldOutNotified,
-        seller: product.seller,
-        createdAt: product.createdAt,
-        updatedAt: product.updatedAt
-      }
-    });
-  } catch (err) {
-    console.error("Error in debug endpoint:", err);
-    res.status(500).json({ success: false, message: "Debug endpoint error" });
-  }
-});
-
-// Test endpoint to mark product as sold out (for testing only)
-router.put("/:id/test-sold-out", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const userId = req.user?._id;
-
-    if (!userId) {
-      return res.status(401).json({ 
-        success: false, 
-        message: "User not authenticated" 
-      });
-    }
-
-    const product = await Product.findById(id);
-    if (!product) {
-      return res.status(404).json({ 
-        success: false, 
-        message: "Product not found" 
-      });
-    }
-
-    if (product.seller.toString() !== userId.toString()) {
-      return res.status(403).json({ 
-        success: false, 
-        message: "You can only modify your own products" 
-      });
-    }
-
-    // Mark as sold out for testing
-    product.quantity = 0;
-    product.isAvailable = false;
-    product.soldOutNotified = true;
-
-    await product.save();
-
-    res.json({ 
-      success: true, 
-      message: "Product marked as sold out for testing", 
-      product 
-    });
-  } catch (err) {
-    console.error("Error marking product as sold out:", err);
-    res.status(500).json({ 
-      success: false, 
-      message: "Failed to mark product as sold out" 
-    });
-  }
-});
-
-// Add a review to a product (only if purchased)
+// Add a review to a product (requires authentication)
 router.post('/:id/review', async (req, res) => {
   try {
-    if (!req.user) return res.status(401).json({ success: false, message: 'Login required' });
     const { rating, comment } = req.body;
     const productId = req.params.id;
-    // Check if user purchased the product
-    const purchased = await Transaction.findOne({ buyer: req.user._id, product: productId });
-    if (!purchased) {
-      return res.status(403).json({ success: false, message: 'You can only review products you have purchased.' });
-    }
+    
     // Check if already reviewed
     const alreadyReviewed = await Review.findOne({ product: productId, user: req.user._id });
     if (alreadyReviewed) {
       return res.status(409).json({ success: false, message: 'You have already reviewed this product.' });
     }
+    
     const review = new Review({ product: productId, user: req.user._id, rating, comment });
     await review.save();
+    
     res.status(201).json({ success: true, message: 'Review added', review });
   } catch (err) {
     res.status(500).json({ success: false, message: 'Server error' });
@@ -534,30 +466,33 @@ router.get('/:id/reviews', async (req, res) => {
   }
 });
 
-// Update a review (user can only update their own review)
+// Update a review (requires authentication)
 router.put('/:id/review', async (req, res) => {
   try {
-    if (!req.user) return res.status(401).json({ success: false, message: 'Login required' });
     const { rating, comment } = req.body;
     const productId = req.params.id;
     const review = await Review.findOne({ product: productId, user: req.user._id });
+    
     if (!review) return res.status(404).json({ success: false, message: 'Review not found' });
+    
     if (rating) review.rating = rating;
     if (comment) review.comment = comment;
     await review.save();
+    
     res.json({ success: true, message: 'Review updated', review });
   } catch (err) {
     res.status(500).json({ success: false, message: 'Server error' });
   }
 });
 
-// Delete a review (user can only delete their own review)
+// Delete a review (requires authentication)
 router.delete('/:id/review', async (req, res) => {
   try {
-    if (!req.user) return res.status(401).json({ success: false, message: 'Login required' });
     const productId = req.params.id;
     const review = await Review.findOneAndDelete({ product: productId, user: req.user._id });
+    
     if (!review) return res.status(404).json({ success: false, message: 'Review not found' });
+    
     res.json({ success: true, message: 'Review deleted' });
   } catch (err) {
     res.status(500).json({ success: false, message: 'Server error' });

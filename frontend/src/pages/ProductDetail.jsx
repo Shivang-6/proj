@@ -60,6 +60,8 @@ const ProductDetail = () => {
   const [editRating, setEditRating] = useState(0);
   const [editComment, setEditComment] = useState("");
 
+  const [reviewCount, setReviewCount] = useState(0);
+
   // Fetch user and product data
   useEffect(() => {
     const fetchData = async () => {
@@ -74,8 +76,7 @@ const ProductDetail = () => {
         const productRes = await axios.get(`${import.meta.env.VITE_API_URL}/products/${productId}`, { withCredentials: true });
         if (productRes.data.success) {
           setProduct(productRes.data.product);
-          if (productRes.data.avgRating) setAvgRating(productRes.data.avgRating);
-          if (productRes.data.reviewCount) setReviewCount(productRes.data.reviewCount);
+          setReviewCount(productRes.data.reviewCount || 0);
           
           // Fetch related products
           const relatedRes = await axios.get(`${import.meta.env.VITE_API_URL}/products?category=${productRes.data.product.category}&limit=4&exclude=${productId}`, { withCredentials: true });
@@ -158,7 +159,11 @@ const ProductDetail = () => {
       setRating(0);
       setComment("");
     } catch (err) {
-      setReviewError(err.response?.data?.message || "Failed to submit review");
+      if (err.response?.status === 409) {
+        setReviewError("You have already reviewed this product.");
+      } else {
+        setReviewError(err.response?.data?.message || "Failed to submit review");
+      }
     }
   };
 
@@ -426,30 +431,6 @@ const ProductDetail = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Navbar */}
-      <header className="bg-white shadow sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-          <Link to="/landing" className="text-2xl font-bold text-blue-600">
-            CampusKart
-          </Link>
-          <nav className="flex gap-4 items-center">
-            <Link
-              to="/sell"
-              className="text-green-600 hover:text-green-800 font-medium transition"
-            >
-              Sell Product
-            </Link>
-            <Link
-              to="/landing"
-              className="text-blue-600 hover:text-blue-800 font-medium transition"
-            >
-              Marketplace
-            </Link>
-            {user && <ProfileDropdown user={user} />}
-          </nav>
-        </div>
-      </header>
-
       {/* Breadcrumb */}
       <div className="max-w-6xl mx-auto px-4 py-4">
         <nav className="flex" aria-label="Breadcrumb">
@@ -543,10 +524,7 @@ const ProductDetail = () => {
           <div className="md:flex">
             {/* Product Image */}
             <div className="md:w-1/2 p-6">
-              <ImageGallery 
-                images={product.imageUrls || [product.imageUrl]} 
-                productName={product.name}
-              />
+              <ImageGallery images={product?.imageUrls} productName={product?.name} />
             </div>
 
             {/* Product Info */}
@@ -829,13 +807,14 @@ const ProductDetail = () => {
               <div className="p-6 border-t">
                 <h3 className="text-2xl font-bold mb-4 flex items-center gap-2">
                   Reviews
-                  {(avgRating || productRes?.data?.avgRating) && (
+                  {avgRating && (
                     <span className="flex items-center gap-1 text-yellow-500 text-lg font-semibold">
-                      {avgRating || productRes?.data?.avgRating}
+                      {avgRating}
                       <FaStar />
+                      <span className="text-gray-500 ml-1">({reviewCount})</span>
                     </span>
                   )}
-                  <span className="text-gray-500 text-base">({reviewCount || reviews.length})</span>
+                  <span className="text-gray-500 text-base">({reviewCount})</span>
                 </h3>
                 {reviewLoading ? (
                   <div className="text-gray-500">Loading reviews...</div>
@@ -923,11 +902,8 @@ const ProductDetail = () => {
                     {reviewError && <div className="text-red-500 mt-2">{reviewError}</div>}
                   </form>
                 )}
-                {user && hasReviewed && (
-                  <div className="text-green-600 font-medium">You have already reviewed this product.</div>
-                )}
-                {user && !canReview && (
-                  <div className="text-gray-500">You can only review products you have purchased.</div>
+                {hasReviewed && (
+                  <div className="text-green-600">You have already reviewed this product.</div>
                 )}
               </div>
             </div>
