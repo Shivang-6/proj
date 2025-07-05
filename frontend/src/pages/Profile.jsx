@@ -156,7 +156,7 @@ const Profile = () => {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-          <p className="mt-2 text-gray-500">Loading profile...</p>
+          <p className="mt-2 text-gray-700">Loading profile...</p>
         </div>
       </div>
     );
@@ -202,11 +202,11 @@ const Profile = () => {
                 </h1>
                 <p className="text-gray-600">{user.email}</p>
                 {user.campus && (
-                  <p className="text-sm text-gray-500 mt-1">
+                  <p className="text-sm text-gray-700 mt-1">
                     📍 {user.campus}
                   </p>
                 )}
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-gray-700">
                   Member since {formatDate(user.joinDate)}
                 </p>
               </div>
@@ -382,7 +382,7 @@ const Profile = () => {
                       {products.filter(p => p.isAvailable && p.quantity > 0).length} items
                     </span>
                   </div>
-                  <div className="text-sm text-gray-500">
+                  <div className="text-sm text-gray-700">
                     These products are visible to buyers
                   </div>
                 </div>
@@ -423,13 +423,13 @@ const Profile = () => {
                         </p>
                         <div className="flex items-center justify-between">
                           <div className="flex items-center space-x-2">
-                            <span className="text-xs text-gray-500">Listed:</span>
+                            <span className="text-xs text-gray-700">Listed:</span>
                             <span className="text-xs text-gray-700 font-medium">
                               {formatDate(product.createdAt)}
                             </span>
                           </div>
                           <div className="flex items-center space-x-2">
-                            <span className="text-xs text-gray-500">Condition:</span>
+                            <span className="text-xs text-gray-700">Condition:</span>
                             <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">
                               {product.condition || 'Good'}
                             </span>
@@ -454,7 +454,7 @@ const Profile = () => {
                         {products.filter(p => !p.isAvailable || p.quantity === 0).length} items
                       </span>
                     </div>
-                    <div className="text-sm text-gray-500">
+                    <div className="text-sm text-gray-700">
                       These products are no longer visible to buyers
                     </div>
                   </div>
@@ -507,13 +507,13 @@ const Profile = () => {
                           
                           <div className="flex items-center justify-between mb-4">
                             <div className="flex items-center space-x-2">
-                              <span className="text-xs text-gray-500">Listed:</span>
+                              <span className="text-xs text-gray-700">Listed:</span>
                               <span className="text-xs text-gray-700 font-medium">
                                 {formatDate(product.createdAt)}
                               </span>
                             </div>
                             <div className="flex items-center space-x-2">
-                              <span className="text-xs text-gray-500">Condition:</span>
+                              <span className="text-xs text-gray-700">Condition:</span>
                               <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">
                                 {product.condition || 'Good'}
                               </span>
@@ -567,8 +567,8 @@ const Profile = () => {
             </div>
           ) : (
             <div className="text-center py-12">
-              <div className="text-gray-400 text-6xl mb-4">📦</div>
-              <p className="text-gray-500 text-lg mb-4">
+              <div className="text-gray-700 text-6xl mb-4">📦</div>
+              <p className="text-gray-700 text-lg mb-4">
                 {isOwnProfile ? "You haven't listed any products yet." : "No products listed yet."}
               </p>
               {isOwnProfile && (

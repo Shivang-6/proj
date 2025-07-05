@@ -171,7 +171,7 @@ const Marketplace = () => {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-900 dark:to-gray-800">
+    <div className="min-h-screen bg-white">
       {/* Hero Section */}
       <section className="relative py-20 px-6 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10"></div>
@@ -187,8 +187,8 @@ const Marketplace = () => {
 
       {/* Features Section */}
       <section className="relative z-10 max-w-6xl mx-auto px-4 pb-12">
-        <div className="bg-white/80 dark:bg-gray-800/80 rounded-2xl shadow-xl p-8">
-          <h2 className="text-3xl font-bold text-center text-gray-800 dark:text-gray-100 mb-8">Why Choose CampusKart?</h2>
+        <div className="bg-white/80 rounded-2xl shadow-xl p-8">
+          <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">Why Choose CampusKart?</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
             <div className="flex flex-col items-center text-center p-6 rounded-xl hover:bg-blue-50 transition">
               <FaComments className="w-8 h-8 text-pink-500" />
@@ -225,7 +225,7 @@ const Marketplace = () => {
       </section>
 
       {/* Product Listing */}
-      <section className="max-w-7xl mx-auto px-6 py-12">
+      <section className="max-w-7xl mx-auto px-6 py-12 bg-white rounded-2xl">
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-3xl font-bold text-gray-800">Latest Listings</h2>
           <div className="text-sm text-gray-500">
@@ -234,27 +234,26 @@ const Marketplace = () => {
         </div>
         
         {/* Search and Filter Section */}
-        <div className="card p-8 mb-8">
+        <div className="p-6 mb-8 bg-white border border-gray-200 rounded-2xl shadow flex flex-col gap-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* Search */}
             <div className="input-group">
-              <FaSearch className="input-icon" />
+              <FaSearch className="input-icon text-gray-400" />
               <input
                 type="text"
                 placeholder="Search products..."
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="input pl-10"
+                onChange={e => setSearchTerm(e.target.value)}
+                className="input pl-10 bg-white border border-gray-300 text-gray-700 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400 shadow-sm"
               />
             </div>
-            
             {/* Category Filter */}
             <div className="input-group">
-              <FaFilter className="input-icon" />
+              <FaFilter className="input-icon text-gray-400" />
               <select
                 value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
-                className="input pl-10"
+                onChange={e => setSelectedCategory(e.target.value)}
+                className="input pl-10 bg-white border border-gray-300 text-gray-700 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm hover:border-blue-400"
               >
                 <option value="all">All Categories</option>
                 <option value="electronics">Electronics</option>
@@ -265,32 +264,30 @@ const Marketplace = () => {
                 <option value="other">Other</option>
               </select>
             </div>
-            
             {/* Price Range */}
             <div className="flex space-x-3">
-              <input
-                type="number"
+                <input
+                  type="number"
                 placeholder="Min ₹"
-                value={priceRange.min}
-                onChange={(e) => setPriceRange(prev => ({ ...prev, min: e.target.value }))}
-                className="input flex-1"
-              />
-              <input
-                type="number"
+                  value={priceRange.min}
+                onChange={e => setPriceRange(prev => ({ ...prev, min: e.target.value }))}
+                className="input flex-1 bg-white border border-gray-300 text-gray-700 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400 shadow-sm"
+                />
+                <input
+                  type="number"
                 placeholder="Max ₹"
-                value={priceRange.max}
-                onChange={(e) => setPriceRange(prev => ({ ...prev, max: e.target.value }))}
-                className="input flex-1"
-              />
+                  value={priceRange.max}
+                onChange={e => setPriceRange(prev => ({ ...prev, max: e.target.value }))}
+                className="input flex-1 bg-white border border-gray-300 text-gray-700 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400 shadow-sm"
+                />
             </div>
-            
             {/* Sort */}
             <div className="input-group">
-              <FaSort className="input-icon" />
+              <FaSort className="input-icon text-gray-400" />
               <select
                 value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-                className="input pl-10"
+                onChange={e => setSortBy(e.target.value)}
+                className="input pl-10 bg-white border border-gray-300 text-gray-700 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm hover:border-blue-400"
               >
                 <option value="newest">Newest First</option>
                 <option value="oldest">Oldest First</option>
@@ -324,27 +321,28 @@ const Marketplace = () => {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {sortedProducts.map(product => (
-              <ProductCard 
-                key={product._id} 
-                product={product} 
-                onChat={handleChat} 
-                onEdit={handleEdit} 
-                onDelete={handleDelete} 
-              />
+              <div key={product._id} className="bg-white rounded-2xl shadow-lg">
+                <ProductCard 
+                  product={product} 
+                  onChat={handleChat} 
+                  onEdit={handleEdit} 
+                  onDelete={handleDelete} 
+                />
+                      </div>
             ))}
-          </div>
-        )}
-
+                      </div>
+                    )}
+                    
         {sortedProducts.length === 0 && !loading && !error && (
           <div className="text-center py-20">
             <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-2xl flex items-center justify-center">
               <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
-              </svg>
+                        </svg>
             </div>
             <h3 className="text-xl font-semibold text-gray-700 mb-2">No products found</h3>
             <p className="text-gray-500 mb-6">Try adjusting your search or filters</p>
-            <button 
+                          <button
               onClick={() => {
                 setSearchTerm('');
                 setSelectedCategory('all');
@@ -353,7 +351,7 @@ const Marketplace = () => {
               className="btn btn-primary"
             >
               Clear Filters
-            </button>
+                  </button>
           </div>
         )}
       </section>
@@ -387,4 +385,3 @@ const Marketplace = () => {
 };
 
 export default Marketplace;
-        

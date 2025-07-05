@@ -218,7 +218,7 @@ const Sell = () => {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-          <p className="mt-2 text-gray-500">Loading...</p>
+          <p className="mt-2 text-gray-700">Loading...</p>
         </div>
       </div>
     );
@@ -239,7 +239,7 @@ const Sell = () => {
           <div className="p-6 border-b bg-gray-50">
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm font-medium text-gray-700">Form Progress</span>
-              <span className="text-sm text-gray-500">{Math.round(formProgress)}%</span>
+              <span className="text-sm text-gray-700">{Math.round(formProgress)}%</span>
             </div>
             <div className="w-full bg-gray-200 rounded-full h-2">
               <div 
@@ -271,7 +271,7 @@ const Sell = () => {
                       required
                     />
                     <label htmlFor="image-upload" className="cursor-pointer">
-                      <div className="text-gray-400 mb-2">
+                      <div className="text-gray-700 mb-2">
                         <svg className="mx-auto h-12 w-12" stroke="currentColor" fill="none" viewBox="0 0 48 48">
                           <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
@@ -279,8 +279,8 @@ const Sell = () => {
                       <div className="text-gray-600">
                         <span className="font-medium">Click to upload</span> or drag and drop
                       </div>
-                      <div className="text-gray-500 text-sm">PNG, JPG, GIF up to 5MB each</div>
-                      <div className="text-gray-400 text-xs mt-1">
+                      <div className="text-gray-700 text-sm">PNG, JPG, GIF up to 5MB each</div>
+                      <div className="text-gray-700 text-xs mt-1">
                         {imagePreviews.length === 0 ? 'Upload at least 1 image' : `Add ${5 - imagePreviews.length} more image${5 - imagePreviews.length !== 1 ? 's' : ''}`}
                       </div>
                     </label>
@@ -312,7 +312,7 @@ const Sell = () => {
                   </div>
                 )}
               </div>
-              <p className="mt-1 text-sm text-gray-500">
+              <p className="mt-1 text-sm text-gray-700">
                 Upload up to 5 clear, well-lit photos. Show the product from multiple angles for better sales.
               </p>
             </div>
@@ -351,7 +351,7 @@ const Sell = () => {
                     value={formData.name}
                     required
                   />
-                  <p className="mt-1 text-sm text-gray-500">
+                  <p className="mt-1 text-sm text-gray-700">
                     Be specific and descriptive. Include brand names and model numbers.
                   </p>
                 </div>
@@ -409,7 +409,7 @@ const Sell = () => {
                         />
                         <div>
                           <div className="font-medium">{condition.label}</div>
-                          <div className="text-sm text-gray-500">{condition.description}</div>
+                          <div className="text-sm text-gray-700">{condition.description}</div>
                         </div>
                       </label>
                     ))}
@@ -422,7 +422,7 @@ const Sell = () => {
                     Price (₹) *
                   </label>
                   <div className="relative">
-                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">₹</span>
+                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-700">₹</span>
                     <input
                       type="number"
                       name="price"
@@ -436,7 +436,7 @@ const Sell = () => {
                     />
                   </div>
                   <div className="mt-1 flex justify-between items-center">
-                    <p className="text-sm text-gray-500">
+                    <p className="text-sm text-gray-700">
                       Set a competitive price. Research similar items on campus.
                     </p>
                     {formData.price && (
@@ -480,7 +480,7 @@ const Sell = () => {
                     required
                   />
                   <div className="mt-1 flex justify-between text-sm">
-                    <span className="text-gray-500">
+                    <span className="text-gray-700">
                       {formData.description.length}/500 characters
                     </span>
                     <span className={`${
@@ -536,7 +536,7 @@ const Sell = () => {
                   disabled={loading || formProgress < 80}
                   className={`w-full py-3 px-6 rounded-lg font-medium transition-all ${
                     loading || formProgress < 80
-                      ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                      ? 'bg-gray-300 text-gray-700 cursor-not-allowed'
                       : 'bg-blue-600 text-white hover:bg-blue-700 transform hover:scale-105'
                   }`}
                 >
@@ -551,7 +551,7 @@ const Sell = () => {
                 </button>
 
                 {formProgress < 80 && (
-                  <p className="text-center text-sm text-gray-500">
+                  <p className="text-center text-sm text-gray-700">
                     Please complete all required fields to list your product
                   </p>
                 )}

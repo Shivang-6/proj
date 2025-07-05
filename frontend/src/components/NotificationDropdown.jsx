@@ -82,10 +82,10 @@ const NotificationDropdown = () => {
         )}
       </button>
       {isOpen && (
-        <div className="dropdown animate-scale-in w-80">
+        <div className="dropdown animate-scale-in w-80 bg-white border border-gray-200 shadow-xl rounded-2xl">
           <div className="p-4 border-b border-gray-100 flex items-center justify-between">
             <h3 className="text-xl font-bold text-gray-800">Notifications</h3>
-            <span className="badge badge-primary">{unreadCount} unread</span>
+            <span className="badge badge-primary bg-blue-100 text-blue-700">{unreadCount} unread</span>
           </div>
           <div className="p-4 max-h-96 overflow-y-auto">
             {loading ? (
@@ -127,9 +127,9 @@ const NotificationDropdown = () => {
               </div>
             )}
           </div>
-          <div className="p-4 border-t border-gray-100 flex items-center gap-4 justify-between">
-            <button className="btn btn-secondary text-xs" onClick={markAllAsRead}>Mark all as read</button>
-            <button className="btn btn-danger text-xs" onClick={clearAll}>Clear all</button>
+          <div className="p-4 border-t border-gray-100 flex items-center gap-4 justify-between bg-gray-50 rounded-b-2xl">
+            <button className="btn btn-secondary text-xs bg-gray-200 text-gray-700 hover:bg-gray-300" onClick={markAllAsRead}>Mark all as read</button>
+            <button className="btn btn-danger text-xs bg-red-500 text-white hover:bg-red-600" onClick={clearAll}>Clear all</button>
           </div>
         </div>
       )}

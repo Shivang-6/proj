@@ -63,7 +63,7 @@ const ProfileDropdown = ({ user }) => {
       </button>
 
       {isOpen && (
-        <div className="dropdown animate-scale-in">
+        <div className="dropdown animate-scale-in bg-white border border-gray-200 shadow-xl rounded-2xl">
           {/* User Info Header */}
           <div className="p-6 border-b border-gray-100">
             <div className="flex items-center space-x-4">
@@ -138,16 +138,11 @@ const ProfileDropdown = ({ user }) => {
             </Link>
           </div>
           
-          <div className="p-2 border-t border-gray-100">
+          <div className="p-2 border-t border-gray-100 bg-gray-50 rounded-b-2xl">
             <button
               onClick={handleLogout}
-              className="w-full flex items-center space-x-3 px-4 py-3 text-red-600 hover:bg-red-50 rounded-xl transition-all duration-200 group"
+              className="bg-red-100 text-red-700 px-3 py-1 rounded text-xs hover:bg-red-200 border border-red-200 font-semibold transition"
             >
-              <div className="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center group-hover:bg-red-200 transition-colors">
-                <svg className="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                </svg>
-              </div>
               <span className="font-medium">Logout</span>
             </button>
           </div>

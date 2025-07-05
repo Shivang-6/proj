@@ -7,7 +7,6 @@ import {
   FaLinkedin, 
   FaGithub,
   FaMapMarkerAlt,
-  FaPhone,
   FaEnvelope,
   FaShieldAlt,
   FaCreditCard,
@@ -20,7 +19,7 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
+    <footer className="bg-white border-t border-gray-200">
       {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -35,26 +34,26 @@ const Footer = () => {
               </div>
               <div>
                 <h3 className="text-2xl font-bold text-gradient">CampusKart</h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400">Campus Marketplace</p>
+                <p className="text-sm text-gray-500">Campus Marketplace</p>
               </div>
             </div>
-            <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-6">
+            <p className="text-gray-600 text-sm leading-relaxed mb-6">
               Connect with fellow students, buy and sell items within your campus community. 
               Safe, secure, and student-focused marketplace.
             </p>
             
             {/* Social Media Links */}
             <div className="flex space-x-4">
-              <a href="#" className="w-10 h-10 bg-gray-100 dark:bg-gray-800 rounded-xl flex items-center justify-center text-gray-600 dark:text-gray-400 hover:bg-blue-500 hover:text-white transition-all duration-200">
+              <a href="#" className="w-10 h-10 bg-gray-100 rounded-xl flex items-center justify-center text-gray-600 hover:bg-blue-500 hover:text-white transition-all duration-200">
                 <FaFacebook className="w-4 h-4" />
               </a>
-              <a href="#" className="w-10 h-10 bg-gray-100 dark:bg-gray-800 rounded-xl flex items-center justify-center text-gray-600 dark:text-gray-400 hover:bg-blue-400 hover:text-white transition-all duration-200">
+              <a href="#" className="w-10 h-10 bg-gray-100 rounded-xl flex items-center justify-center text-gray-600 hover:bg-blue-400 hover:text-white transition-all duration-200">
                 <FaTwitter className="w-4 h-4" />
               </a>
-              <a href="#" className="w-10 h-10 bg-gray-100 dark:bg-gray-800 rounded-xl flex items-center justify-center text-gray-600 dark:text-gray-400 hover:bg-pink-500 hover:text-white transition-all duration-200">
+              <a href="#" className="w-10 h-10 bg-gray-100 rounded-xl flex items-center justify-center text-gray-600 hover:bg-pink-500 hover:text-white transition-all duration-200">
                 <FaInstagram className="w-4 h-4" />
               </a>
-              <a href="#" className="w-10 h-10 bg-gray-100 dark:bg-gray-800 rounded-xl flex items-center justify-center text-gray-600 dark:text-gray-400 hover:bg-blue-600 hover:text-white transition-all duration-200">
+              <a href="#" className="w-10 h-10 bg-gray-100 rounded-xl flex items-center justify-center text-gray-600 hover:bg-blue-600 hover:text-white transition-all duration-200">
                 <FaLinkedin className="w-4 h-4" />
               </a>
             </div>
@@ -62,35 +61,35 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-6">Quick Links</h4>
+            <h4 className="text-lg font-semibold text-gray-800 mb-6">Quick Links</h4>
             <ul className="space-y-3">
               <li>
-                <Link to="/" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 text-sm">
+                <Link to="/" className="text-gray-600 hover:text-blue-600 transition-colors duration-200 text-sm">
                   Marketplace
                 </Link>
               </li>
               <li>
-                <Link to="/sell" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 text-sm">
+                <Link to="/sell" className="text-gray-600 hover:text-blue-600 transition-colors duration-200 text-sm">
                   Sell Items
                 </Link>
               </li>
               <li>
-                <Link to="/my-products" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 text-sm">
+                <Link to="/my-products" className="text-gray-600 hover:text-blue-600 transition-colors duration-200 text-sm">
                   My Products
                 </Link>
               </li>
               <li>
-                <Link to="/cart" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 text-sm">
+                <Link to="/cart" className="text-gray-600 hover:text-blue-600 transition-colors duration-200 text-sm">
                   Shopping Cart
                 </Link>
               </li>
               <li>
-                <Link to="/chats" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 text-sm">
+                <Link to="/chats" className="text-gray-600 hover:text-blue-600 transition-colors duration-200 text-sm">
                   Messages
                 </Link>
               </li>
               <li>
-                <Link to="/history" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 text-sm">
+                <Link to="/history" className="text-gray-600 hover:text-blue-600 transition-colors duration-200 text-sm">
                   Purchase History
                 </Link>
               </li>
@@ -99,29 +98,29 @@ const Footer = () => {
 
           {/* Features */}
           <div>
-            <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-6">Features</h4>
+            <h4 className="text-lg font-semibold text-gray-800 mb-6">Features</h4>
             <ul className="space-y-3">
-              <li className="flex items-center space-x-3 text-gray-600 dark:text-gray-300 text-sm">
+              <li className="flex items-center space-x-3 text-gray-600 text-sm">
                 <FaShieldAlt className="w-4 h-4 text-green-500" />
                 <span>Secure Payments</span>
               </li>
-              <li className="flex items-center space-x-3 text-gray-600 dark:text-gray-300 text-sm">
+              <li className="flex items-center space-x-3 text-gray-600 text-sm">
                 <FaComments className="w-4 h-4 text-blue-500" />
                 <span>In-App Chat</span>
               </li>
-              <li className="flex items-center space-x-3 text-gray-600 dark:text-gray-300 text-sm">
+              <li className="flex items-center space-x-3 text-gray-600 text-sm">
                 <FaUsers className="w-4 h-4 text-purple-500" />
                 <span>Campus Only</span>
               </li>
-              <li className="flex items-center space-x-3 text-gray-600 dark:text-gray-300 text-sm">
+              <li className="flex items-center space-x-3 text-gray-600 text-sm">
                 <FaCreditCard className="w-4 h-4 text-orange-500" />
                 <span>Easy Transactions</span>
               </li>
-              <li className="flex items-center space-x-3 text-gray-600 dark:text-gray-300 text-sm">
+              <li className="flex items-center space-x-3 text-gray-600 text-sm">
                 <FaMapMarkerAlt className="w-4 h-4 text-red-500" />
                 <span>Local Pickup</span>
               </li>
-              <li className="flex items-center space-x-3 text-gray-600 dark:text-gray-300 text-sm">
+              <li className="flex items-center space-x-3 text-gray-600 text-sm">
                 <FaHeart className="w-4 h-4 text-pink-500" />
                 <span>Student Friendly</span>
               </li>
@@ -130,29 +129,21 @@ const Footer = () => {
 
           {/* Contact Info */}
           <div>
-            <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-6">Contact Us</h4>
+            <h4 className="text-lg font-semibold text-gray-800 mb-6">Contact Us</h4>
             <div className="space-y-4">
               <div className="flex items-start space-x-3">
                 <FaMapMarkerAlt className="w-4 h-4 text-blue-500 mt-1 flex-shrink-0" />
                 <div>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm font-medium">Address</p>
-                  <p className="text-gray-500 dark:text-gray-400 text-xs">University Campus, Student Center, Building A</p>
-                </div>
-              </div>
-              
-              <div className="flex items-start space-x-3">
-                <FaPhone className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
-                <div>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm font-medium">Phone</p>
-                  <p className="text-gray-500 dark:text-gray-400 text-xs">+1 (555) 123-4567</p>
+                  <p className="text-gray-600 text-sm font-medium">Address</p>
+                  <p className="text-gray-500 text-xs">Chitkara University, Baddi</p>
                 </div>
               </div>
               
               <div className="flex items-start space-x-3">
                 <FaEnvelope className="w-4 h-4 text-purple-500 mt-1 flex-shrink-0" />
                 <div>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm font-medium">Email</p>
-                  <p className="text-gray-500 dark:text-gray-400 text-xs">support@campuskart.com</p>
+                  <p className="text-gray-600 text-sm font-medium">Email</p>
+                  <p className="text-gray-500 text-xs">iamshivanggautam@gmail.com</p>
                 </div>
               </div>
             </div>
@@ -161,22 +152,22 @@ const Footer = () => {
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-gray-200 dark:border-gray-700">
+      <div className="border-t border-gray-200">
         <div className="max-w-7xl mx-auto px-6 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <div className="flex items-center space-x-6 text-sm text-gray-500 dark:text-gray-400">
+            <div className="flex items-center space-x-6 text-sm text-gray-500">
               <span>© {currentYear} CampusKart. All rights reserved.</span>
               <span>•</span>
-              <Link to="#" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+              <Link to="#" className="hover:text-blue-600 transition-colors">
                 Privacy Policy
               </Link>
               <span>•</span>
-              <Link to="#" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+              <Link to="#" className="hover:text-blue-600 transition-colors">
                 Terms of Service
               </Link>
             </div>
             
-            <div className="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
+            <div className="flex items-center space-x-2 text-sm text-gray-500">
               <span>Made with</span>
               <FaHeart className="w-3 h-3 text-red-500" />
               <span>for students</span>

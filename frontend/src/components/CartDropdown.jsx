@@ -46,11 +46,11 @@ const CartDropdown = ({ cartItems, onRemoveFromCart, onUpdateQuantity }) => {
       </button>
 
       {isOpen && (
-        <div className="dropdown animate-scale-in">
+        <div className="dropdown animate-scale-in bg-white border border-gray-200 shadow-xl rounded-2xl">
           <div className="p-6 border-b border-gray-100">
             <div className="flex items-center justify-between">
               <h3 className="text-xl font-bold text-gray-800">Shopping Cart</h3>
-              <span className="badge badge-primary">{cartItems.length} items</span>
+              <span className="badge badge-primary bg-blue-100 text-blue-700">{cartItems.length} items</span>
             </div>
           </div>
 
@@ -70,7 +70,7 @@ const CartDropdown = ({ cartItems, onRemoveFromCart, onUpdateQuantity }) => {
                 {cartItems.map((item) => (
                   <div
                     key={item._id}
-                    className="card p-4 hover:shadow-medium transition-all duration-200"
+                    className="card p-4 hover:shadow-medium transition-all duration-200 bg-gray-50 border border-gray-100 rounded-xl"
                   >
                     <div className="flex items-start space-x-4">
                       <div className="relative">
@@ -127,13 +127,13 @@ const CartDropdown = ({ cartItems, onRemoveFromCart, onUpdateQuantity }) => {
           </div>
 
           {cartItems.length > 0 && (
-            <div className="p-6 border-t border-gray-100 bg-gray-50/50">
+            <div className="p-6 border-t border-gray-100 bg-gray-50 rounded-b-2xl">
               <div className="flex items-center justify-between mb-4">
                 <span className="text-lg font-bold text-gray-800">Total:</span>
-                <span className="text-2xl font-bold text-gradient">₹{calculateTotal()}</span>
+                <span className="text-2xl font-bold text-blue-600">₹{calculateTotal()}</span>
               </div>
               <button
-                className="w-full btn btn-primary text-center"
+                className="w-full btn btn-primary text-center bg-blue-600 text-white hover:bg-blue-700"
                 onClick={() => {
                   setIsOpen(false);
                   navigate('/cart');

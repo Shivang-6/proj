@@ -163,7 +163,7 @@ const MyProducts = () => {
         {loading ? (
           <div className="text-center py-8">
             <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-            <p className="mt-2 text-gray-500">Loading your products...</p>
+            <p className="mt-2 text-gray-700">Loading your products...</p>
           </div>
         ) : error ? (
           <div className="text-center py-8">
@@ -179,7 +179,7 @@ const MyProducts = () => {
           <div className="text-center py-12">
             <div className="bg-white rounded-lg shadow p-8">
               <h2 className="text-xl font-semibold text-gray-700 mb-2">No Products Listed Yet</h2>
-              <p className="text-gray-500 mb-6">You haven't listed any products yet. Start selling now!</p>
+              <p className="text-gray-700 mb-6">You haven't listed any products yet. Start selling now!</p>
               <Link to="/sell">
                 <button className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition">
                   List Your First Product
@@ -207,13 +207,13 @@ const MyProducts = () => {
                 </div>
                 
                 <div className="p-4">
-                  <h3 className="font-semibold text-lg mb-2">{product.name}</h3>
+                  <h3 className="font-bold text-lg mb-2 text-gray-800">{product.name}</h3>
                   <p className="text-gray-600 text-sm mb-2 line-clamp-2">{product.description}</p>
                   <div className="flex justify-between items-center mb-2">
                     <span className="text-lg font-bold text-blue-600">₹{product.price}</span>
-                    <span className="text-sm text-gray-500">Qty: {product.quantity}</span>
+                    <span className="text-sm text-gray-700">Qty: {product.quantity}</span>
                   </div>
-                  <div className="flex justify-between items-center text-sm text-gray-500 mb-3">
+                  <div className="flex justify-between items-center text-sm text-gray-700 mb-3">
                     <span className="capitalize">{product.category}</span>
                     <span className="capitalize">{product.condition}</span>
                   </div>

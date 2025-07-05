@@ -392,7 +392,7 @@ const ProductDetail = () => {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-          <p className="mt-2 text-gray-500">Loading product details...</p>
+          <p className="mt-2 text-gray-700">Loading product details...</p>
         </div>
       </div>
     );
@@ -416,8 +416,8 @@ const ProductDetail = () => {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="text-gray-400 text-6xl mb-4">📦</div>
-          <p className="text-gray-500 mb-4">Product not found</p>
+          <div className="text-gray-700 text-6xl mb-4">📦</div>
+          <p className="text-gray-700 mb-4">Product not found</p>
           <Link to="/landing" className="text-blue-600 hover:text-blue-800">
             Back to Marketplace
           </Link>
@@ -442,10 +442,10 @@ const ProductDetail = () => {
             </li>
             <li>
               <div className="flex items-center">
-                <svg className="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-6 h-6 text-gray-700" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd"></path>
                 </svg>
-                <span className="ml-1 text-gray-500 md:ml-2">{product.name}</span>
+                <span className="ml-1 text-gray-700 md:ml-2">{product.name}</span>
               </div>
             </li>
           </ol>
@@ -467,7 +467,7 @@ const ProductDetail = () => {
                     <span className={`px-2 py-1 rounded-full text-xs font-medium ${conditionBadge.color}`}>
                       {conditionBadge.text}
                     </span>
-                    <span className="text-sm text-gray-500 capitalize">
+                    <span className="text-sm text-gray-700 capitalize">
                       {product.category || 'Other'}
                     </span>
                   </div>
@@ -488,7 +488,7 @@ const ProductDetail = () => {
                         alert('Product link copied to clipboard!');
                       }
                     }}
-                    className="text-gray-500 hover:text-blue-600 transition p-2 rounded-full hover:bg-blue-50"
+                    className="text-gray-700 hover:text-blue-600 transition p-2 rounded-full hover:bg-blue-50"
                     title="Share Product"
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -500,7 +500,7 @@ const ProductDetail = () => {
                       navigator.clipboard.writeText(window.location.href);
                       alert('Product link copied to clipboard!');
                     }}
-                    className="text-gray-500 hover:text-blue-600 transition p-2 rounded-full hover:bg-blue-50"
+                    className="text-gray-700 hover:text-blue-600 transition p-2 rounded-full hover:bg-blue-50"
                     title="Copy Link"
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -508,11 +508,11 @@ const ProductDetail = () => {
                     </svg>
                   </button>
                 </div>
-                <p className="text-sm text-gray-500">Listed on</p>
+                <p className="text-sm text-gray-700">Listed on</p>
                 <p className="text-sm font-medium">{formatDate(product.createdAt)}</p>
                 {product.updatedAt && product.updatedAt !== product.createdAt && (
                   <>
-                    <p className="text-sm text-gray-500 mt-1">Updated on</p>
+                    <p className="text-sm text-gray-700 mt-1">Updated on</p>
                     <p className="text-sm font-medium">{formatDate(product.updatedAt)}</p>
                   </>
                 )}
@@ -582,13 +582,13 @@ const ProductDetail = () => {
                       >
                         {product.seller.displayName || product.seller.name}
                       </Link>
-                      <p className="text-sm text-gray-500">
+                      <p className="text-sm text-gray-700">
                         Member since {formatDate(product.seller.createdAt || new Date())}
                       </p>
                       <div className="flex items-center space-x-4 mt-2">
-                        <span className="text-xs text-gray-500">⭐ 4.8 (12 reviews)</span>
-                        <span className="text-xs text-gray-500">📦 5 items sold</span>
-                        <span className="text-xs text-gray-500">📍 Campus Area</span>
+                        <span className="text-xs text-gray-700">⭐ 4.8 (12 reviews)</span>
+                        <span className="text-xs text-gray-700">📦 5 items sold</span>
+                        <span className="text-xs text-gray-700">📍 Campus Area</span>
                       </div>
                     </div>
                   </div>
@@ -690,7 +690,7 @@ const ProductDetail = () => {
                                       <h4 className="font-semibold text-gray-800">
                                         {buyer.displayName || buyer.name}
                                       </h4>
-                                      <p className="text-xs text-gray-500">
+                                      <p className="text-xs text-gray-700">
                                         {isFromBuyer ? 'Buyer' : 'You'} • {formatDate(lastMessage.timestamp)}
                                       </p>
                                     </div>
@@ -732,9 +732,9 @@ const ProductDetail = () => {
                     </>
                   ) : (
                     <div className="text-center py-4">
-                      <div className="text-gray-400 text-4xl mb-2">💬</div>
-                      <p className="text-gray-600 mb-2">No buyer inquiries yet</p>
-                      <p className="text-sm text-gray-500">
+                      <div className="text-gray-700 text-4xl mb-2">💬</div>
+                      <p className="text-gray-700 mb-2">No buyer inquiries yet</p>
+                      <p className="text-sm text-gray-700">
                         When buyers are interested in your product, their messages will appear here.
                       </p>
                     </div>
@@ -768,7 +768,7 @@ const ProductDetail = () => {
                       </button>
                     </div>
                     <div className="text-center">
-                      <p className="text-sm text-gray-500">This is your product</p>
+                      <p className="text-sm text-gray-700">This is your product</p>
                     </div>
                   </div>
                 ) : (
@@ -795,7 +795,7 @@ const ProductDetail = () => {
                       </button>
                     </div>
                     <div className="text-center">
-                      <p className="text-sm text-gray-500">Interested? Chat with the seller or buy directly!</p>
+                      <p className="text-sm text-gray-700">Interested? Chat with the seller or buy directly!</p>
                     </div>
                   </div>
                 )}
@@ -803,7 +803,7 @@ const ProductDetail = () => {
 
               {/* Additional Info */}
               <div className="mt-6 pt-6 border-t">
-                <div className="flex items-center justify-between text-sm text-gray-500">
+                <div className="flex items-center justify-between text-sm text-gray-700">
                   <span>Product ID: {product._id}</span>
                   <span>Views: {product.views || 0}</span>
                 </div>
@@ -817,15 +817,15 @@ const ProductDetail = () => {
                     <span className="flex items-center gap-1 text-yellow-500 text-lg font-semibold">
                       {avgRating}
                       <FaStar />
-                      <span className="text-gray-500 ml-1">({reviewCount})</span>
+                      <span className="text-gray-700 ml-1">({reviewCount})</span>
                     </span>
                   )}
-                  <span className="text-gray-500 text-base">({reviewCount})</span>
+                  <span className="text-gray-700 text-base">({reviewCount})</span>
                 </h3>
                 {reviewLoading ? (
-                  <div className="text-gray-500">Loading reviews...</div>
+                  <div className="text-gray-700">Loading reviews...</div>
                 ) : reviews.length === 0 ? (
-                  <div className="text-gray-500">No reviews yet.</div>
+                  <div className="text-gray-700">No reviews yet.</div>
                 ) : (
                   <div className="space-y-4 mb-6">
                     {reviews.map(r => (
@@ -835,7 +835,7 @@ const ProductDetail = () => {
                             {[...Array(r.rating)].map((_, i) => <FaStar key={i} />)}
                           </span>
                           <span className="font-semibold text-gray-800">{r.user?.displayName || r.user?.name || 'User'}</span>
-                          <span className="text-xs text-gray-400 ml-2">{r.createdAt ? new Date(r.createdAt).toLocaleDateString() : ''}</span>
+                          <span className="text-xs text-gray-700 ml-2">{r.createdAt ? new Date(r.createdAt).toLocaleDateString() : ''}</span>
                           {user && r.user && r.user._id === user._id && !editingReview && (
                             <>
                               <button onClick={() => handleEditReview(r)} className="ml-2 text-blue-600 hover:underline text-xs">Edit</button>

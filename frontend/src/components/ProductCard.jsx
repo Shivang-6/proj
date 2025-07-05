@@ -12,12 +12,12 @@ const ProductCard = ({ product, showDetails = true, onClick }) => {
 
   return (
     <motion.div 
-      className="card card-hover p-6 flex flex-col gap-4 group"
+      className="card card-hover p-6 flex flex-col gap-4 group bg-white"
       whileHover={{ y: -4 }}
       transition={{ duration: 0.2 }}
     >
       <Link to={`/product/${product._id}`} className="block">
-        <div className="relative h-56 overflow-hidden bg-gradient-to-br from-blue-50 to-purple-100 dark:from-gray-700 dark:to-gray-600 rounded-2xl">
+        <div className="relative h-56 overflow-hidden bg-gradient-to-br from-blue-50 to-purple-100 rounded-2xl">
           <ImageGallery images={product.imageUrls || [product.imageUrl]} productName={product.name} compact={true} />
           
           {/* Price Badge */}
@@ -30,7 +30,7 @@ const ProductCard = ({ product, showDetails = true, onClick }) => {
             <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm rounded-xl px-3 py-2 flex items-center gap-2 text-yellow-500 text-sm font-semibold shadow-lg">
               <FaStar className="text-yellow-500" />
               <span>{product.avgRating.toFixed(1)}</span>
-              <span className="text-gray-500 ml-1">({product.reviewCount})</span>
+              <span className="text-gray-700 ml-1">({product.reviewCount})</span>
             </div>
           )}
         </div>
@@ -38,17 +38,17 @@ const ProductCard = ({ product, showDetails = true, onClick }) => {
       
       <div className="flex flex-col flex-1">
         <Link to={`/product/${product._id}`} className="block flex-1">
-          <h4 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-2 group-hover:text-blue-600 transition-colors line-clamp-1">
+          <h4 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-blue-600 transition-colors line-clamp-1">
             {product.name}
           </h4>
-          <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-2 flex-1">
+          <p className="text-gray-700 text-sm mb-4 line-clamp-2 flex-1">
             {product.description}
           </p>
         </Link>
         
         {/* Seller Info */}
         {product.seller && (
-          <div className="flex items-center gap-3 mb-4 p-3 bg-gray-50 dark:bg-gray-700 rounded-xl">
+          <div className="flex items-center gap-3 mb-4 p-3 bg-gray-50 rounded-xl">
             <img
               src={product.seller.profilePicture || 'https://placehold.co/32x32?text=U'}
               alt={product.seller.displayName || product.seller.name}
@@ -61,7 +61,7 @@ const ProductCard = ({ product, showDetails = true, onClick }) => {
               <p className="text-sm font-semibold text-blue-700 line-clamp-1">
                 {product.seller.displayName || product.seller.name}
               </p>
-              <p className="text-xs text-gray-500 dark:text-gray-400">Verified Seller</p>
+              <p className="text-xs text-gray-700">Verified Seller</p>
             </div>
           </div>
         )}

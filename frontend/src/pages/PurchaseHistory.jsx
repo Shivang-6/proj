@@ -107,23 +107,23 @@ const PurchaseHistory = () => {
         <div key={transaction._id} className="border border-gray-200 rounded-lg p-4 bg-gray-50">
           <div className="flex items-start space-x-4">
             <div className="w-20 h-20 rounded-lg overflow-hidden bg-gray-200 flex items-center justify-center">
-              <span className="text-gray-400 text-sm">No Image</span>
+              <span className="text-gray-700 text-sm">No Image</span>
             </div>
             <div className="flex-1">
               <h3 className="text-lg font-semibold text-gray-800">
                 Product Unavailable
               </h3>
-              <p className="text-gray-600 text-sm mt-1">
+              <p className="text-gray-700 text-sm mt-1">
                 This product may have been removed or is no longer available.
               </p>
               <div className="mt-2 space-y-1">
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-gray-700">
                   <span className="font-medium">Price:</span> ₹{transaction.price || 0}
                 </p>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-gray-700">
                   <span className="font-medium">Date:</span> {formatDate(transaction.transactionDate)}
                 </p>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-gray-700">
                   <span className="font-medium">Status:</span> 
                   <span className={`ml-1 px-2 py-1 rounded-full text-xs font-medium ${
                     transaction.status === 'completed' || transaction.status === 'payment_completed' 
@@ -138,7 +138,7 @@ const PurchaseHistory = () => {
                   </span>
                 </p>
                 {transaction.paymentMethod && (
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-gray-700">
                     <span className="font-medium">Payment:</span> 
                     <span className={`ml-1 px-2 py-1 rounded-full text-xs font-medium ${
                       transaction.paymentMethod === 'razorpay' 
@@ -175,18 +175,18 @@ const PurchaseHistory = () => {
             <h3 className="text-lg font-semibold text-gray-800 hover:text-blue-600 transition">
               {transaction.product.name || 'Unknown Product'}
             </h3>
-            <p className="text-gray-600 text-sm mt-1">
+            <p className="text-gray-700 text-sm mt-1">
               {transaction.product.description || 'No description available'}
             </p>
             
             <div className="mt-2 space-y-1">
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-gray-700">
                 <span className="font-medium">Price:</span> ₹{transaction.price || 0}
               </p>
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-gray-700">
                 <span className="font-medium">Date:</span> {formatDate(transaction.transactionDate)}
               </p>
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-gray-700">
                 <span className="font-medium">Status:</span> 
                 <span className={`ml-1 px-2 py-1 rounded-full text-xs font-medium ${
                   transaction.status === 'completed' || transaction.status === 'payment_completed' 
@@ -201,7 +201,7 @@ const PurchaseHistory = () => {
                 </span>
               </p>
               {transaction.paymentMethod && (
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-gray-700">
                   <span className="font-medium">Payment:</span> 
                   <span className={`ml-1 px-2 py-1 rounded-full text-xs font-medium ${
                     transaction.paymentMethod === 'razorpay' 
@@ -224,7 +224,7 @@ const PurchaseHistory = () => {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-          <p className="mt-2 text-gray-500">Loading transactions...</p>
+          <p className="mt-2 text-gray-700">Loading transactions...</p>
         </div>
       </div>
     );
@@ -246,7 +246,7 @@ const PurchaseHistory = () => {
                 className={`px-6 py-3 font-medium transition ${
                   activeTab === "all"
                     ? "border-b-2 border-blue-500 text-blue-600"
-                    : "text-gray-500 hover:text-gray-700"
+                    : "text-gray-700 hover:text-gray-900"
                 }`}
               >
                 All Transactions
@@ -256,7 +256,7 @@ const PurchaseHistory = () => {
                 className={`px-6 py-3 font-medium transition ${
                   activeTab === "purchases"
                     ? "border-b-2 border-blue-500 text-blue-600"
-                    : "text-gray-500 hover:text-gray-700"
+                    : "text-gray-700 hover:text-gray-900"
                 }`}
               >
                 My Purchases
@@ -266,7 +266,7 @@ const PurchaseHistory = () => {
                 className={`px-6 py-3 font-medium transition ${
                   activeTab === "sales"
                     ? "border-b-2 border-blue-500 text-blue-600"
-                    : "text-gray-500 hover:text-gray-700"
+                    : "text-gray-700 hover:text-gray-900"
                 }`}
               >
                 My Sales
@@ -292,9 +292,9 @@ const PurchaseHistory = () => {
               </div>
             ) : (
               <div className="text-center py-12">
-                <div className="text-gray-400 text-6xl mb-4">📋</div>
-                <p className="text-gray-500 text-lg mb-4">No transactions found.</p>
-                <p className="text-gray-400 text-sm mb-4">
+                <div className="text-gray-700 text-6xl mb-4">📋</div>
+                <p className="text-gray-700 text-lg mb-4">No transactions found.</p>
+                <p className="text-gray-700 text-sm mb-4">
                   {activeTab === "purchases" && "You haven't made any purchases yet."}
                   {activeTab === "sales" && "You haven't sold any products yet."}
                   {activeTab === "all" && "No transaction history available."}
@@ -305,7 +305,7 @@ const PurchaseHistory = () => {
                       Browse Marketplace
                     </button>
                   </Link>
-                  <div className="text-xs text-gray-400">
+                  <div className="text-xs text-gray-700">
                     <p>Debug: Active tab: {activeTab}</p>
                     <p>User ID: {user?._id}</p>
                     <p>Transactions count: {transactions.length}</p>
