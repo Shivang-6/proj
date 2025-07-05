@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { FaShoppingBag } from 'react-icons/fa';
 import ProfileDropdown from './ProfileDropdown.jsx';
 import CartDropdown from './CartDropdown.jsx';
+import NotificationDropdown from './NotificationDropdown.jsx';
 import { useCart } from '../contexts/CartContext.jsx';
 
 const Navbar = ({ user, onLogout }) => {
@@ -49,6 +50,8 @@ const Navbar = ({ user, onLogout }) => {
 
           {/* Right Side Actions */}
           <div className="flex items-center space-x-4">
+            {/* Notification Dropdown */}
+            <NotificationDropdown />
             {/* Cart Dropdown */}
             <CartDropdown 
               cartItems={cartItems}

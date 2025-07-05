@@ -15,6 +15,7 @@ import MongoStore from 'connect-mongo';
 
 import authRoutes from './routes/auth.js';
 import './auth/passport.js';
+import notificationRoutes from './routes/notifications.js';
 
 dotenv.config();
 
@@ -65,6 +66,7 @@ app.use("/chat", chatRoutes);
 app.use("/profile", profileRoutes);
 app.use("/transactions", transactionRoutes);
 app.use("/payment", paymentRoutes);
+app.use("/notifications", notificationRoutes);
 
 // 📦 MongoDB
 mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/campuskart')
