@@ -6,7 +6,7 @@ import ProfileDropdown from "../components/ProfileDropdown.jsx";
 import EditProductModal from "../components/EditProductModal.jsx";
 import DeleteConfirmationModal from "../components/DeleteConfirmationModal.jsx";
 import ImageGallery from "../components/ImageGallery.jsx";
-import { FaStar, FaSearch, FaFilter, FaSort } from 'react-icons/fa';
+import { FaStar, FaSearch, FaFilter, FaSort, FaComments, FaCreditCard, FaShoppingCart, FaUserShield, FaTags } from 'react-icons/fa';
 import ProductCard from '../components/ProductCard.jsx';
 
 const Marketplace = () => {
@@ -176,27 +176,50 @@ const Marketplace = () => {
       <section className="relative py-20 px-6 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10"></div>
         <div className="relative max-w-4xl mx-auto text-center">
-          <h1 className="text-5xl font-bold text-gradient mb-6 text-shadow">
+          <h1 className="text-5xl font-bold text-gradient mb-6 pb-2 leading-tight">
             {user ? `Welcome back, ${user.displayName || user.name}!` : "Welcome to CampusKart"}
           </h1>
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
             Discover amazing deals and connect with fellow students. Buy, sell, and trade items within your campus community.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/sell">
-              <button className="btn btn-success text-lg px-8 py-4">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                </svg>
-                Start Selling
-              </button>
-            </Link>
-            <button className="btn btn-ghost text-lg px-8 py-4">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              Learn More
-            </button>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="relative z-10 max-w-6xl mx-auto px-4 pb-12">
+        <div className="bg-white/80 rounded-2xl shadow-xl p-8">
+          <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">Why Choose CampusKart?</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+            <div className="flex flex-col items-center text-center p-6 rounded-xl hover:bg-blue-50 transition">
+              <FaComments className="w-8 h-8 text-pink-500" />
+              <h3 className="mt-4 text-xl font-semibold text-gray-800">In-App Chat</h3>
+              <p className="mt-2 text-gray-600 text-base">Chat instantly with buyers and sellers to negotiate, ask questions, and arrange meetups.</p>
+            </div>
+            <div className="flex flex-col items-center text-center p-6 rounded-xl hover:bg-blue-50 transition">
+              <FaCreditCard className="w-8 h-8 text-green-500" />
+              <h3 className="mt-4 text-xl font-semibold text-gray-800">Secure Payments</h3>
+              <p className="mt-2 text-gray-600 text-base">Pay securely through integrated payment gateways. Your transactions are protected.</p>
+            </div>
+            <div className="flex flex-col items-center text-center p-6 rounded-xl hover:bg-blue-50 transition">
+              <FaShoppingCart className="w-8 h-8 text-blue-500" />
+              <h3 className="mt-4 text-xl font-semibold text-gray-800">Smart Cart</h3>
+              <p className="mt-2 text-gray-600 text-base">Add items to your cart, review, and checkout with ease—just like your favorite e-commerce sites.</p>
+            </div>
+            <div className="flex flex-col items-center text-center p-6 rounded-xl hover:bg-blue-50 transition">
+              <FaUserShield className="w-8 h-8 text-purple-500" />
+              <h3 className="mt-4 text-xl font-semibold text-gray-800">Campus-Only Access</h3>
+              <p className="mt-2 text-gray-600 text-base">Only verified campus members can join, ensuring a safe and trusted marketplace.</p>
+            </div>
+            <div className="flex flex-col items-center text-center p-6 rounded-xl hover:bg-blue-50 transition">
+              <FaSearch className="w-8 h-8 text-yellow-500" />
+              <h3 className="mt-4 text-xl font-semibold text-gray-800">Powerful Search</h3>
+              <p className="mt-2 text-gray-600 text-base">Find exactly what you need with advanced filters for category, price, and more.</p>
+            </div>
+            <div className="flex flex-col items-center text-center p-6 rounded-xl hover:bg-blue-50 transition">
+              <FaTags className="w-8 h-8 text-indigo-500" />
+              <h3 className="mt-4 text-xl font-semibold text-gray-800">Great Deals</h3>
+              <p className="mt-2 text-gray-600 text-base">Discover amazing bargains on books, gadgets, accessories, and more—all from your campus community.</p>
+            </div>
           </div>
         </div>
       </section>
