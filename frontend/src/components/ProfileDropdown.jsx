@@ -153,14 +153,6 @@ const ProfileDropdown = ({ user }) => {
           </div>
         </div>
       )}
-
-      {/* Backdrop */}
-      {isOpen && (
-        <div
-          className="modal-overlay"
-          onClick={() => setIsOpen(false)}
-        />
-      )}
     </div>
   );
 };

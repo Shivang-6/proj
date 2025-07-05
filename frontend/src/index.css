@@ -53,7 +53,7 @@
 @layer components {
   /* Modern Card Component */
   .card {
-    @apply bg-white rounded-2xl shadow-lg border border-gray-100/50 backdrop-blur-sm;
+    @apply bg-white rounded-2xl shadow-lg border border-gray-100/50;
   }
 
   .card-hover {
@@ -87,7 +87,7 @@
 
   /* Modern Input Components */
   .input {
-    @apply w-full px-4 py-3 rounded-xl border border-gray-200 bg-white/50 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder:text-gray-400;
+    @apply w-full px-4 py-3 rounded-xl border border-gray-200 bg-white/50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder:text-gray-400;
   }
 
   .input-group {
@@ -130,7 +130,7 @@
 
   /* Modern Modal */
   .modal-overlay {
-    @apply fixed inset-0 bg-black/50 backdrop-blur-sm z-50;
+    @apply fixed inset-0 z-50;
   }
 
   .modal-content {
@@ -139,12 +139,12 @@
 
   /* Modern Dropdown */
   .dropdown {
-    @apply absolute right-0 mt-2 w-80 bg-white rounded-2xl shadow-2xl border border-gray-100 z-50 backdrop-blur-sm;
+    @apply absolute right-0 mt-2 w-80 bg-white rounded-2xl shadow-2xl border border-gray-100 z-50;
   }
 
   /* Glass Effect */
   .glass {
-    @apply bg-white/80 backdrop-blur-md border border-white/20;
+    @apply bg-white/80 border border-white/20;
   }
 
   /* Gradient Backgrounds */
