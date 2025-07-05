@@ -19,6 +19,7 @@ import Navbar from "./components/Navbar.jsx";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { CartProvider } from "./contexts/CartContext.jsx";
+import { ThemeProvider } from "./contexts/ThemeContext.jsx";
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -34,27 +35,29 @@ const App = () => {
     window.location.href = "/login";
   };
   return (
-    <CartProvider>
-      <Router>
-        <Navbar user={user} onLogout={handleLogout} />
-        <Routes>
-          <Route path="/" element={<Marketplace />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/my-products" element={<MyProducts />} />
-          <Route path="/landing" element={<Marketplace />} />
-          <Route path="/product/:productId" element={<ProductDetail />} />
-          <Route path="/sell" element={<Sell />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/profile/:userId" element={<Profile />} />
-          <Route path="/history" element={<PurchaseHistory />} />
-          <Route path="/chats" element={<Chats />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/checkout" element={<Checkout />} />
-        </Routes>
-        <Footer />
-      </Router>
-    </CartProvider>
+    <ThemeProvider>
+      <CartProvider>
+        <Router>
+          <Navbar user={user} onLogout={handleLogout} />
+          <Routes>
+            <Route path="/" element={<Marketplace />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/my-products" element={<MyProducts />} />
+            <Route path="/landing" element={<Marketplace />} />
+            <Route path="/product/:productId" element={<ProductDetail />} />
+            <Route path="/sell" element={<Sell />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/profile/:userId" element={<Profile />} />
+            <Route path="/history" element={<PurchaseHistory />} />
+            <Route path="/chats" element={<Chats />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/checkout" element={<Checkout />} />
+          </Routes>
+          <Footer />
+        </Router>
+      </CartProvider>
+    </ThemeProvider>
   );
 };
 

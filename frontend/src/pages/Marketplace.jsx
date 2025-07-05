@@ -171,7 +171,7 @@ const Marketplace = () => {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-900 dark:to-gray-800">
       {/* Hero Section */}
       <section className="relative py-20 px-6 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10"></div>
@@ -187,8 +187,8 @@ const Marketplace = () => {
 
       {/* Features Section */}
       <section className="relative z-10 max-w-6xl mx-auto px-4 pb-12">
-        <div className="bg-white/80 rounded-2xl shadow-xl p-8">
-          <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">Why Choose CampusKart?</h2>
+        <div className="bg-white/80 dark:bg-gray-800/80 rounded-2xl shadow-xl p-8">
+          <h2 className="text-3xl font-bold text-center text-gray-800 dark:text-gray-100 mb-8">Why Choose CampusKart?</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
             <div className="flex flex-col items-center text-center p-6 rounded-xl hover:bg-blue-50 transition">
               <FaComments className="w-8 h-8 text-pink-500" />

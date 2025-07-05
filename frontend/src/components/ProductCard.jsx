@@ -17,7 +17,7 @@ const ProductCard = ({ product, showDetails = true, onClick }) => {
       transition={{ duration: 0.2 }}
     >
       <Link to={`/product/${product._id}`} className="block">
-        <div className="relative h-56 overflow-hidden bg-gradient-to-br from-blue-50 to-purple-100 rounded-2xl">
+        <div className="relative h-56 overflow-hidden bg-gradient-to-br from-blue-50 to-purple-100 dark:from-gray-700 dark:to-gray-600 rounded-2xl">
           <ImageGallery images={product.imageUrls || [product.imageUrl]} productName={product.name} compact={true} />
           
           {/* Price Badge */}
@@ -38,17 +38,17 @@ const ProductCard = ({ product, showDetails = true, onClick }) => {
       
       <div className="flex flex-col flex-1">
         <Link to={`/product/${product._id}`} className="block flex-1">
-          <h4 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-blue-600 transition-colors line-clamp-1">
+          <h4 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-2 group-hover:text-blue-600 transition-colors line-clamp-1">
             {product.name}
           </h4>
-          <p className="text-gray-600 text-sm mb-4 line-clamp-2 flex-1">
+          <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-2 flex-1">
             {product.description}
           </p>
         </Link>
         
         {/* Seller Info */}
         {product.seller && (
-          <div className="flex items-center gap-3 mb-4 p-3 bg-gray-50 rounded-xl">
+          <div className="flex items-center gap-3 mb-4 p-3 bg-gray-50 dark:bg-gray-700 rounded-xl">
             <img
               src={product.seller.profilePicture || 'https://placehold.co/32x32?text=U'}
               alt={product.seller.displayName || product.seller.name}
@@ -61,7 +61,7 @@ const ProductCard = ({ product, showDetails = true, onClick }) => {
               <p className="text-sm font-semibold text-blue-700 line-clamp-1">
                 {product.seller.displayName || product.seller.name}
               </p>
-              <p className="text-xs text-gray-500">Verified Seller</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400">Verified Seller</p>
             </div>
           </div>
         )}

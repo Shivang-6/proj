@@ -1,14 +1,16 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FaShoppingBag } from 'react-icons/fa';
+import { FaShoppingBag, FaMoon, FaSun } from 'react-icons/fa';
 import ProfileDropdown from './ProfileDropdown.jsx';
 import CartDropdown from './CartDropdown.jsx';
 import NotificationDropdown from './NotificationDropdown.jsx';
 import { useCart } from '../contexts/CartContext.jsx';
+import { useTheme } from '../contexts/ThemeContext.jsx';
 
 const Navbar = ({ user, onLogout }) => {
   const location = useLocation();
   const { cartItems, removeFromCart, updateQuantity } = useCart();
+  const { theme, toggleTheme } = useTheme();
   
   const navLink = (to, label) => (
     <Link
@@ -20,7 +22,7 @@ const Navbar = ({ user, onLogout }) => {
   );
   
   return (
-    <nav className="sticky top-0 z-50 bg-white border-b border-gray-200/50 shadow-soft">
+    <nav className="sticky top-0 z-50 bg-white dark:bg-gray-800 border-b border-gray-200/50 dark:border-gray-700/50 shadow-soft">
       <div className="max-w-7xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Logo and Brand */}
@@ -36,7 +38,7 @@ const Navbar = ({ user, onLogout }) => {
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-gradient">CampusKart</h1>
-                <p className="text-xs text-gray-500 -mt-1">Campus Marketplace</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400 -mt-1">Campus Marketplace</p>
               </div>
             </Link>
 
@@ -58,6 +60,19 @@ const Navbar = ({ user, onLogout }) => {
               onRemoveFromCart={removeFromCart}
               onUpdateQuantity={updateQuantity}
             />
+            
+            {/* Dark Mode Toggle */}
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+              aria-label="Toggle dark mode"
+            >
+              {theme === 'dark' ? (
+                <FaSun className="w-5 h-5 text-yellow-400" />
+              ) : (
+                <FaMoon className="w-5 h-5 text-gray-600" />
+              )}
+            </button>
             
             {/* User Actions */}
             {user ? (
@@ -82,7 +97,7 @@ const Navbar = ({ user, onLogout }) => {
         </div>
 
         {/* Mobile Navigation */}
-        <div className="md:hidden mt-4 pt-4 border-t border-gray-200/50">
+        <div className="md:hidden mt-4 pt-4 border-t border-gray-200/50 dark:border-gray-700/50">
           <div className="flex items-center justify-center space-x-4">
             {navLink('/', 'Marketplace')}
             {navLink('/my-products', 'My Products')}
