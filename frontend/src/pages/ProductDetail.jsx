@@ -571,6 +571,9 @@ const ProductDetail = () => {
                       src={product.seller.profilePicture || "https://placehold.co/48x48?text=U"}
                       alt={product.seller.displayName || product.seller.name}
                       className="w-12 h-12 rounded-full object-cover border-2 border-blue-200"
+                      onError={(e) => {
+                        e.target.src = 'https://placehold.co/48x48?text=U';
+                      }}
                     />
                     <div className="flex-1">
                       <Link 
@@ -679,6 +682,9 @@ const ProductDetail = () => {
                                       src={buyer.profilePicture || "https://placehold.co/40x40?text=U"}
                                       alt={buyer.displayName || buyer.name}
                                       className="w-10 h-10 rounded-full object-cover border-2 border-blue-200"
+                                      onError={(e) => {
+                                        e.target.src = 'https://placehold.co/40x40?text=U';
+                                      }}
                                     />
                                     <div>
                                       <h4 className="font-semibold text-gray-800">

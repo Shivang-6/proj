@@ -11,11 +11,14 @@ import PurchaseHistory from "./pages/PurchaseHistory.jsx";
 import Chats from "./pages/Chats.jsx";
 import Signup from "./pages/Signup.jsx";
 import MyProducts from "./pages/MyProducts.jsx";
+import Cart from "./pages/Cart.jsx";
+import Checkout from "./pages/Checkout.jsx";
 import Footer from "./components/Footer.jsx";
 import "./App.css";
 import Navbar from "./components/Navbar.jsx";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { CartProvider } from "./contexts/CartContext.jsx";
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -31,23 +34,27 @@ const App = () => {
     window.location.href = "/login";
   };
   return (
-    <Router>
-      <Navbar user={user} onLogout={handleLogout} />
-      <Routes>
-        <Route path="/" element={<Marketplace />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/my-products" element={<MyProducts />} />
-        <Route path="/landing" element={<Marketplace />} />
-        <Route path="/product/:productId" element={<ProductDetail />} />
-        <Route path="/sell" element={<Sell />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/profile/:userId" element={<Profile />} />
-        <Route path="/history" element={<PurchaseHistory />} />
-        <Route path="/chats" element={<Chats />} />
-      </Routes>
-      <Footer />
-    </Router>
+    <CartProvider>
+      <Router>
+        <Navbar user={user} onLogout={handleLogout} />
+        <Routes>
+          <Route path="/" element={<Marketplace />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/my-products" element={<MyProducts />} />
+          <Route path="/landing" element={<Marketplace />} />
+          <Route path="/product/:productId" element={<ProductDetail />} />
+          <Route path="/sell" element={<Sell />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/:userId" element={<Profile />} />
+          <Route path="/history" element={<PurchaseHistory />} />
+          <Route path="/chats" element={<Chats />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
+        </Routes>
+        <Footer />
+      </Router>
+    </CartProvider>
   );
 };
 

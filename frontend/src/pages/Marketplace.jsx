@@ -6,7 +6,7 @@ import ProfileDropdown from "../components/ProfileDropdown.jsx";
 import EditProductModal from "../components/EditProductModal.jsx";
 import DeleteConfirmationModal from "../components/DeleteConfirmationModal.jsx";
 import ImageGallery from "../components/ImageGallery.jsx";
-import { FaStar } from 'react-icons/fa';
+import { FaStar, FaSearch, FaFilter, FaSort } from 'react-icons/fa';
 import ProductCard from '../components/ProductCard.jsx';
 
 const Marketplace = () => {
@@ -171,48 +171,67 @@ const Marketplace = () => {
   });
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
       {/* Hero Section */}
-      <section className="text-center py-12">
-        <h2 className="text-3xl font-bold text-gray-800 mb-2">
-          {user ? `Welcome, ${user.displayName || user.name}!` : "Welcome to CampusKart"}
-        </h2>
-        <p className="text-gray-500 text-lg">
-          Discover and trade items easily within your campus.
-        </p>
-        <Link to="/sell">
-          <button className="mt-6 bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition">
-            Sell a Product
-          </button>
-        </Link>
+      <section className="relative py-20 px-6 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10"></div>
+        <div className="relative max-w-4xl mx-auto text-center">
+          <h1 className="text-5xl font-bold text-gradient mb-6 text-shadow">
+            {user ? `Welcome back, ${user.displayName || user.name}!` : "Welcome to CampusKart"}
+          </h1>
+          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+            Discover amazing deals and connect with fellow students. Buy, sell, and trade items within your campus community.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link to="/sell">
+              <button className="btn btn-success text-lg px-8 py-4">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                </svg>
+                Start Selling
+              </button>
+            </Link>
+            <button className="btn btn-ghost text-lg px-8 py-4">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              Learn More
+            </button>
+          </div>
+        </div>
       </section>
 
       {/* Product Listing */}
-      <section className="max-w-7xl mx-auto px-4 py-10">
-        <h3 className="text-2xl font-semibold text-cyan-100 mb-6 drop-shadow">Latest Listings</h3>
+      <section className="max-w-7xl mx-auto px-6 py-12">
+        <div className="flex items-center justify-between mb-8">
+          <h2 className="text-3xl font-bold text-gray-800">Latest Listings</h2>
+          <div className="text-sm text-gray-500">
+            {sortedProducts.length} of {products.length} products
+          </div>
+        </div>
         
         {/* Search and Filter Section */}
-        <div className="bg-white rounded-lg shadow p-6 mb-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="card p-8 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* Search */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Search</label>
+            <div className="input-group">
+              <FaSearch className="input-icon" />
               <input
                 type="text"
                 placeholder="Search products..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500"
+                className="input pl-10"
               />
             </div>
             
             {/* Category Filter */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
+            <div className="input-group">
+              <FaFilter className="input-icon" />
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500"
+                className="input pl-10"
               >
                 <option value="all">All Categories</option>
                 <option value="electronics">Electronics</option>
@@ -225,33 +244,30 @@ const Marketplace = () => {
             </div>
             
             {/* Price Range */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Price Range</label>
-              <div className="flex space-x-2">
-                <input
-                  type="number"
-                  placeholder="Min"
-                  value={priceRange.min}
-                  onChange={(e) => setPriceRange(prev => ({ ...prev, min: e.target.value }))}
-                  className="w-1/2 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500"
-                />
-                <input
-                  type="number"
-                  placeholder="Max"
-                  value={priceRange.max}
-                  onChange={(e) => setPriceRange(prev => ({ ...prev, max: e.target.value }))}
-                  className="w-1/2 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500"
-                />
-              </div>
+            <div className="flex space-x-3">
+              <input
+                type="number"
+                placeholder="Min ₹"
+                value={priceRange.min}
+                onChange={(e) => setPriceRange(prev => ({ ...prev, min: e.target.value }))}
+                className="input flex-1"
+              />
+              <input
+                type="number"
+                placeholder="Max ₹"
+                value={priceRange.max}
+                onChange={(e) => setPriceRange(prev => ({ ...prev, max: e.target.value }))}
+                className="input flex-1"
+              />
             </div>
             
             {/* Sort */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Sort By</label>
+            <div className="input-group">
+              <FaSort className="input-icon" />
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500"
+                className="input pl-10"
               >
                 <option value="newest">Newest First</option>
                 <option value="oldest">Oldest First</option>
@@ -260,37 +276,61 @@ const Marketplace = () => {
               </select>
             </div>
           </div>
-          
-          {/* Results Count */}
-          <div className="mt-4 pt-4 border-t">
-            <p className="text-sm text-gray-600">
-              Showing {sortedProducts.length} of {products.length} products
-            </p>
-          </div>
         </div>
         
         {loading ? (
-          <div className="text-center py-8">
-            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-            <p className="mt-2 text-gray-500">Loading products...</p>
+          <div className="text-center py-20">
+            <div className="loading-spinner w-12 h-12 mx-auto mb-4"></div>
+            <p className="text-gray-500 text-lg">Loading amazing products...</p>
           </div>
         ) : error ? (
-          <div className="text-center py-8">
-            <p className="text-red-500">{error}</p>
+          <div className="text-center py-20">
+            <div className="w-16 h-16 mx-auto mb-4 bg-red-100 rounded-2xl flex items-center justify-center">
+              <svg className="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <p className="text-red-500 text-lg mb-4">{error}</p>
             <button 
               onClick={() => window.location.reload()} 
-              className="mt-2 text-blue-600 hover:text-blue-800"
+              className="btn btn-primary"
             >
-              Try again
+              Try Again
             </button>
           </div>
         ) : (
-          <div className="bg-white/10 backdrop-blur-md rounded-3xl shadow-2xl p-8">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-              {sortedProducts.map(product => (
-                <ProductCard key={product._id} product={product} onChat={handleChat} onEdit={handleEdit} onDelete={handleDelete} />
-              ))}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            {sortedProducts.map(product => (
+              <ProductCard 
+                key={product._id} 
+                product={product} 
+                onChat={handleChat} 
+                onEdit={handleEdit} 
+                onDelete={handleDelete} 
+              />
+            ))}
+          </div>
+        )}
+
+        {sortedProducts.length === 0 && !loading && !error && (
+          <div className="text-center py-20">
+            <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-2xl flex items-center justify-center">
+              <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+              </svg>
             </div>
+            <h3 className="text-xl font-semibold text-gray-700 mb-2">No products found</h3>
+            <p className="text-gray-500 mb-6">Try adjusting your search or filters</p>
+            <button 
+              onClick={() => {
+                setSearchTerm('');
+                setSelectedCategory('all');
+                setPriceRange({ min: '', max: '' });
+              }} 
+              className="btn btn-primary"
+            >
+              Clear Filters
+            </button>
           </div>
         )}
       </section>
@@ -324,3 +364,4 @@ const Marketplace = () => {
 };
 
 export default Marketplace;
+        

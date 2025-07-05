@@ -32,18 +32,9 @@ const ImageGallery = ({ images = [], productName = "Product", compact = false, e
             alt={`${productName} - Image ${currentImageIndex + 1}`}
             className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
             onError={(e) => {
-              e.target.style.display = 'none';
-              e.target.nextSibling.style.display = 'flex';
+              e.target.src = 'https://placehold.co/300x200?text=Image+Not+Available';
             }}
           />
-          <div 
-            className="hidden w-full h-full flex-col items-center justify-center text-gray-500 bg-gray-50"
-          >
-            <svg className="w-8 h-8 mb-2 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
-            <p className="text-xs font-medium">No Image</p>
-          </div>
         </div>
       </div>
     );
@@ -60,19 +51,9 @@ const ImageGallery = ({ images = [], productName = "Product", compact = false, e
             alt={`${productName} - Image ${currentImageIndex + 1}`}
             className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
             onError={(e) => {
-              e.target.style.display = 'none';
-              e.target.nextSibling.style.display = 'flex';
+              e.target.src = 'https://placehold.co/600x400?text=Image+Not+Available';
             }}
           />
-          <div 
-            className="hidden w-full h-full flex-col items-center justify-center text-gray-500 bg-gray-50"
-          >
-            <svg className="w-16 h-16 mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
-            <p className="text-sm font-medium">Image Not Available</p>
-            <p className="text-xs text-gray-400 mt-1">{productName}</p>
-          </div>
         </div>
 
         {/* Navigation Arrows */}
@@ -125,17 +106,9 @@ const ImageGallery = ({ images = [], productName = "Product", compact = false, e
                 alt={`${productName} thumbnail ${index + 1}`}
                 className="w-full h-full object-cover"
                 onError={(e) => {
-                  e.target.style.display = 'none';
-                  e.target.nextSibling.style.display = 'flex';
+                  e.target.src = 'https://placehold.co/64x64?text=No+Img';
                 }}
               />
-              <div 
-                className="hidden w-full h-full items-center justify-center bg-gray-100"
-              >
-                <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-              </div>
             </button>
           ))}
         </div>
