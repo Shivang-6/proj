@@ -3,6 +3,8 @@ import passport from "passport";
 import bcrypt from "bcryptjs";
 import User from "../models/user.js";
 import Product from "../models/product.js";
+import dotenv from "dotenv";
+dotenv.config();
 
 const router = express.Router();
 
@@ -10,9 +12,7 @@ router.get("/google", passport.authenticate("google", { scope: ["profile", "emai
 
 router.get("/google/callback",
     passport.authenticate("google", {
-      successRedirect: process.env.CLIENT_URL
-        ? process.env.CLIENT_URL.replace(/\/$/, '') + "/landing"
-        : "http://localhost:5173/landing",
+      successRedirect: process.env.CLIENT_URL + "/landing",
       failureRedirect: "/auth/login/failed"
     })
   );
