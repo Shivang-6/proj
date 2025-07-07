@@ -22,6 +22,10 @@ dotenv.config();
 const app = express();
 const server = createServer(app);
 
+app.get('/', (req, res) => {
+  res.send('Welcome to CampusKart API');
+});
+
 // Socket.IO setup
 const io = new Server(server, {
   cors: {
