@@ -59,7 +59,7 @@ app.use(passport.session());
 
 // 🌐 CORS setup
 app.use(cors({ 
-  origin: process.env.CLIENT_URL || 'http://localhost:5173', 
+  origin: 'https://campuskart.netlify.app/' || 'http://localhost:5173', 
   credentials: true 
 }));
 
