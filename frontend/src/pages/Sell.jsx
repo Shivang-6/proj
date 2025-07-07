@@ -367,8 +367,8 @@ const Sell = () => {
                         key={category.value}
                         className={`flex items-center p-3 border rounded-lg cursor-pointer transition-all ${
                           formData.category === category.value
-                            ? 'border-blue-500 bg-blue-50'
-                            : 'border-gray-300 hover:border-gray-400'
+                            ? 'border-blue-500 bg-blue-50 text-blue-700'
+                            : 'border-black text-black hover:border-black'
                         }`}
                       >
                         <input
@@ -396,8 +396,8 @@ const Sell = () => {
                         key={condition.value}
                         className={`flex items-start p-3 border rounded-lg cursor-pointer transition-all ${
                           formData.condition === condition.value
-                            ? 'border-blue-500 bg-blue-50'
-                            : 'border-gray-300 hover:border-gray-400'
+                            ? 'border-blue-500 bg-blue-50 text-blue-700'
+                            : 'border-black text-black hover:border-black'
                         }`}
                       >
                         <input

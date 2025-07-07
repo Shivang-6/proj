@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../contexts/CartContext.jsx';
 import { FaTrash, FaArrowLeft, FaShoppingBag, FaCreditCard } from 'react-icons/fa';
+import { CartPaymentModal } from '../components/PaymentModal.jsx';
 
 const Cart = () => {
   const { 
@@ -14,6 +15,19 @@ const Cart = () => {
   } = useCart();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [showCartPayment, setShowCartPayment] = useState(false);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    // Fetch user info for payment prefill
+    (async () => {
+      try {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/auth/login/success`, { credentials: 'include' });
+        const data = await res.json();
+        setUser(data.user);
+      } catch {}
+    })();
+  }, []);
 
   const handleQuantityChange = (productId, newQuantity) => {
     if (newQuantity < 1) {
@@ -199,22 +213,25 @@ const Cart = () => {
               </div>
 
               <button
-                onClick={handleCheckout}
-                disabled={loading}
-                className="w-full btn btn-primary text-lg py-4 mb-4"
+                className="w-full btn btn-primary text-lg py-4 mt-4"
+                onClick={() => setShowCartPayment(true)}
+                disabled={cartItems.length === 0}
               >
-                {loading ? (
-                  <>
-                    <div className="loading-spinner"></div>
-                    Processing...
-                  </>
-                ) : (
-                  <>
-                    <FaCreditCard className="w-5 h-5" />
-                    Proceed to Checkout
-                  </>
-                )}
+                <FaCreditCard className="w-5 h-5" />
+                Buy All (Pay ₹{getCartTotal()})
               </button>
+
+              <CartPaymentModal
+                isOpen={showCartPayment}
+                onClose={() => setShowCartPayment(false)}
+                cartItems={cartItems}
+                user={user}
+                onPaymentSuccess={() => {
+                  clearCart();
+                  setShowCartPayment(false);
+                  navigate('/payment-success');
+                }}
+              />
 
               <div className="text-center">
                 <p className="text-sm text-gray-500 mb-2">Secure checkout powered by</p>

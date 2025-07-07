@@ -47,3 +47,9 @@
 @media (forced-colors: active) {
   /* your styles */
 }
+
+input:disabled, textarea:disabled {
+  color: #000 !important;
+  -webkit-text-fill-color: #000 !important;
+  opacity: 1;
+}

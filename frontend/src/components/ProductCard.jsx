@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FaStar } from 'react-icons/fa';
+import { FaStar, FaComments } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import ImageGallery from './ImageGallery.jsx';
 import AddToCartButton from './AddToCartButton.jsx';
@@ -79,11 +79,15 @@ const ProductCard = ({ product, showDetails = true, onClick }) => {
               </svg>
               View Details
             </Link>
-            <AddToCartButton 
-              product={product}
-              onAddToCart={addToCart}
-              disabled={inCart}
-            />
+            {product.seller && (
+              <Link
+                to={`/chats?seller=${product.seller._id}`}
+                className="flex-1 btn btn-secondary text-center flex items-center justify-center gap-2"
+              >
+                <FaComments className="w-4 h-4" />
+                Chat
+              </Link>
+            )}
           </div>
         )}
       </div>
